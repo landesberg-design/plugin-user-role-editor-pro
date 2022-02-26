@@ -9,10 +9,13 @@
  
  class URE_Import_Roles_CSV {
                                  
+    
     function __construct() {
-         
+        
+        $this->lib = URE_Lib_Pro::get_instance();
+        
         add_action( 'ure_settings_tools_show', array( $this, 'show' ) );
-        add_action('ure_load_js', array($this, 'add_js'));
+        add_action('ure_load_js_settings', array($this, 'add_js'));
     }
     // end of __construct()
      
@@ -21,8 +24,9 @@
         if ( !current_user_can('ure_import_roles') ) {
             return;
         }
-        
-        $post_action = $this->lib->get_request_var('action', 'post');
+                
+        $lib = URE_Lib::get_instance();
+        $post_action = $lib->get_request_var('action', 'post');
         if ( $post_action===URE_Import_Single_Role::NEXT_SITE_ACTION ) {
             /**
              * It's time to start a process for import role and add-ons to every site of the multi-site network one by one by AJAX

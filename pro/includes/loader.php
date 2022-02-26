@@ -95,7 +95,10 @@ require_once(URE_PLUGIN_DIR .'pro/includes/classes/page-permissions-view.php');
 require_once(URE_PLUGIN_DIR .'pro/includes/classes/themes-access.php');
 
 // Gravity Forms Access
-require_once(URE_PLUGIN_DIR .'pro/includes/classes/gf-access.php');
+require_once( URE_PLUGIN_DIR .'pro/includes/classes/gf-access-view.php');
+require_once( URE_PLUGIN_DIR .'pro/includes/classes/gf-access-role.php');
+require_once( URE_PLUGIN_DIR .'pro/includes/classes/gf-access-user.php');
+require_once( URE_PLUGIN_DIR .'pro/includes/classes/gf-access.php');
 
 // Content view restricitons
 require_once( URE_PLUGIN_DIR .'pro/includes/classes/content-view-restrictions-controller.php');

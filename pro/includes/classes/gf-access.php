@@ -1,16 +1,17 @@
 <?php
 /*
- * Gravity Forms Access Restrict on per site - per user - per form basis class
+ * Gravity Forms Access Restrict on per site - per user - per role - per form basis class
  * part of User Role Editor Pro plugin
  * Author: Vladimir Garagulya
- * email: vladimir@shinephp.com
+ * email: support@role-editor.com
  * 
  */
 
 class URE_GF_Access {
-    
+            
     private $lib = null;
-    private $user_meta_key = '';
+    private $umk_what_to_do = 0;
+    private $umk_forms_list = '';
     private $form_table_name = '';
     private $form_from_key = '';
     private $count_forms_query = '';
@@ -20,10 +21,13 @@ class URE_GF_Access {
         global $wpdb;
         
         $this->lib = URE_Lib_Pro::get_instance();
-        $this->user_meta_key = $wpdb->prefix . 'ure_allow_gravity_forms';
+        
+        $this->umk_what_to_do = $wpdb->prefix . 'ure_gravity_forms_access_what_to_do';
+        $this->umk_forms_list = $wpdb->prefix . 'ure_allow_gravity_forms';
+        
         $this->form_table_name = GFFormsModel::get_form_table_name();
         $this->form_from_key = "FROM {$this->form_table_name}";
-        // GF v.2.3.1: forms_model.php, line 737, function get_form_count()
+        // GF v.2.5.1.2: forms_model.php, line 794, function get_form_count()
         $this->count_forms_query = "
             SELECT
             (SELECT count(0) FROM {$this->form_table_name} WHERE is_trash = 0) as total,
@@ -31,10 +35,11 @@ class URE_GF_Access {
             (SELECT count(0) FROM {$this->form_table_name} WHERE is_active=0 AND is_trash = 0 ) as inactive,
             (SELECT count(0) FROM {$this->form_table_name} WHERE is_trash=1) as trash
             ";
-        add_action( 'edit_user_profile', array($this, 'edit_user_allowed_forms_list'), 10, 2 );     
-        add_action( 'profile_update', array($this, 'save_user_allowed_forms_list'), 10 );
+                
+        URE_GF_Access_Role::init();    
+        URE_GF_Access_User::init();
+            
         add_action( 'admin_head', array($this, 'prohibited_links_redirect') );
-        //add_action( 'admin_enqueue_scripts', array( &$this, 'load_js' ) );
         add_action('admin_init', array($this, 'set_final_hooks'));
         
     }
@@ -42,7 +47,7 @@ class URE_GF_Access {
     
     
     
-    protected function add_gf_import_capability() {
+    private function add_gf_import_capability() {
         global $wp_roles;
         
         if (!isset($wp_roles)) {
@@ -56,104 +61,38 @@ class URE_GF_Access {
         }        
         
     }
-    // end of add_gf_import_capability()
+    // end of add_gf_import_capability()            
     
     
     public function set_final_hooks() {
                 
         $this->add_gf_import_capability();
         $current_user = wp_get_current_user();
-        if ( $this->lib->user_is_admin($current_user->ID) ) {
+        if ( empty( $current_user ) ) {
+            return false;
+        }
+        if ( is_a( $current_user, 'WP_User') && $current_user->ID==0) {
+            return false;
+        }
+        if ( $this->lib->user_is_admin( $current_user->ID ) ) {
             return;
         }
         
-        $min_cap = $this->lib->user_can_which($current_user, GFCommon::all_caps());
-        if (!empty($min_cap)) {
-            add_filter('query', array($this, 'restrict_form_list' ));
+        if ( URE_GF_Access_User::can_edit( $current_user ) ) {
+            add_filter('query', array($this, 'restrict_form_list' ) );
         }
                         
     }
-    // end of set_final_hooks()
-    
-    
-    public function edit_user_allowed_forms_list($user) {
-        
-        $result = stripos($_SERVER['REQUEST_URI'], 'network/user-edit.php');
-        if ($result !== false) {  // exit, this code just for single site user profile only, not for network admin center
-            return;
-        }
-        $current_user_id = get_current_user_id();
-        if (!$this->lib->user_is_admin($current_user_id)) {
-            return;
-        }
-        
-        $min_cap = $this->lib->user_can_which($user, GFCommon::all_caps());
-        if (empty($min_cap)) {
-            return;
-        }
-        
-        $allow_gravity_forms = get_user_meta($user->ID, $this->user_meta_key, true);
-?>        
-        <h3><?php _e('Gravity Forms Restrictions', 'user-role-editor'); ?></h3>
-<table class="form-table">
-        		<tr>
-        			<th scope="row"><?php esc_html_e('Allow access to forms with ID (comma separated) ', 'user-role-editor'); ?></th>
-        			<td>
-               <input type="text" name="ure_allow_gravity_forms" id="ure_allow_gravity_forms" value="<?php echo $allow_gravity_forms; ?>" size="40" />
-        			</td>
-        		</tr>
-        </table>		        
-        
-<?php        
-    }
-    // end of set_user_allowed_forms_list()
-
-    
-        // save additional user roles when user profile is updated, as WordPress itself doesn't know about them
-    public function save_user_allowed_forms_list($user_id) {
-
-        if (!current_user_can('edit_users', $user_id)) {
-            return;
-        }
-        
-        // update Gravity Forms access restriction: comma separated GF IDs list
-        if (isset($_POST['ure_allow_gravity_forms'])) {
-            $gf_list = explode(',', trim($_POST['ure_allow_gravity_forms']));
-            if (count($gf_list)>0) {
-                $gf_id_arr = array();
-                foreach($gf_list as $gf_id) {
-                    $gf_id = (int) $gf_id;  // save interger values only
-                    if ($gf_id>0) {
-                        $gf_id_arr[] = $gf_id;
-                    }
-                }
-                $gf_list_str = implode(', ', $gf_id_arr);
-            }            
-        } else {
-            $gf_list_str = '';
-        }
-        update_user_meta($user_id, $this->user_meta_key, $gf_list_str);
-    }
-    // end of save_allowed_forms_list()    
-    
+    // end of set_final_hooks()        
+                        
     
     private function get_allowed_forms() {
+                
+        if ( $this->allowed_forms_list===null ) {
+            $this->allowed_forms_list = URE_GF_Access_User::get_allowed_forms();            
+        }                
         
-        $current_user_id = get_current_user_id();
-        if ($this->allowed_forms_list==null) {
-            $this->allowed_forms_list = array();
-            $allow_gravity_forms = get_user_meta($current_user_id, $this->user_meta_key, true);
-            if (!empty($allow_gravity_forms)) {                
-                $this->allowed_forms_list = explode(',', $allow_gravity_forms);
-                for ($i=0; $i<count($this->allowed_forms_list); $i++) {
-                    $this->allowed_forms_list[$i] = trim($this->allowed_forms_list[$i]);
-                }                
-            }
-        }
-        
-        $allowed_forms_list = apply_filters('ure_get_allowed_gf_forms', $this->allowed_forms_list);
-        
-        return $allowed_forms_list;
+        return $this->allowed_forms_list;
     }
     // end of get_allowed_forms()
     

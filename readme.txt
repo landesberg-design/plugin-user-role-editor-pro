@@ -2,9 +2,9 @@
 Contributors: Vladimir Garagulya (https://www.role-editor.com)
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
-Tested up to: 5.8.1
-Stable tag: 4.60.2
-Requires PHP: 5.6
+Tested up to: 5.9
+Stable tag: 4.61
+Requires PHP: 7.3
 License URI: https://www.role-editor.com/end-user-license-agreement/
 
 User Role Editor Pro WordPress plugin makes user roles and capabilities changing easy. Edit/add/delete WordPress user roles and capabilities.
@@ -39,6 +39,20 @@ Right decision in this case is to delete free version folder (user-role-editor) 
 
 == Changelog ==
 
+= [4.61] 26.01.2022 =
+* Core version: 4.61.1
+* Update: Marked as compatible with WordPress 5.9.
+* Update: PHP 7.3 is marked as required.
+* New: Gravity Forms Edit Access add-on: It's possible to set what forms is allowed to edit for the selected role.
+* New: Content view restrictions add-on: [user_role_editor] shortcode "roles" and "except_roles" attributes supports the "no_role" value for logged-in users with "No role for this site" - without any role granted.
+* Fix: Content view restrictions add-on: PHP Warning:  A non-numeric value encountered in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/posts-view.php on line 224
+* Fix: Meta boxes access add-on:  PHP Warning:  A non-numeric value encountered in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/meta-boxes.php on line 452
+* Core version was updated to version 4.61.1
+* Update: If installed PHP/WordPress version is lower than required one, script termination ( wp_die() ) was replaced with notice-warning admin notice output.
+* Update: "Settings->User Role Editor->Tools->Reset" button is additionally protected from the unintended/accidental usage by text input field. Manual input of "Permanently delete all custom user roles and capabilities" text is required to enable the "Reset" button.
+* Update: Partial code review and refactoring according with WordPress & PHP coding standards.
+* Fix: "Users->selected user->Capabilities" page: 'select all' checkbox did not work.
+
 = [4.60.2] 21.09.2021 =
 * Core version: 4.60.2
 * Update: Marked as compatible with WordPress 5.8.1
@@ -50,25 +64,5 @@ Right decision in this case is to delete free version folder (user-role-editor) 
 * Core version was updated to version 4.60.2
 * New: URE user capability 'ure_edit_gravityforms_access' was added (for future use).
 * Fix: Multisite: URE_Editor::is_full_network_sync() returned FALSE, instead TRUE for the AJAX call, while call was made from the Network Admin (wp-admin/network/).
-
-= [4.60.1] 21.07.2021 =
-* Core version: 4.60.1
-* Update: Marked as compatible with WordPress 5.8.
-* Fix: Edit restrictions add-on: If one of the pages on hierarchy tree was not published (draft) it may become unavailable for editing in spite of user can (is allowed) edit the parent page.
-* Core version was updated to version 4.60.1
-* Fix: PHP Notice: Undefined property: URE_User_View::$multisite in /wp-content/plugins/user-role-editor/includes/classes/user-view.php on line 145
-
-= [4.60] 28.06.2021 =
-* Core version: 4.60
-* Fix: WP Multisite: User lost granted roles after click "Users->Capabilities->Update Network". 
-* New: Edit posts/pages/custom post types restrictions add-on: new custom filters were added: 'ure_post_edit_access_restricted_taxonomies', 'ure_post_edit_access_allowed_terms', 'ure_post_edit_access_terms_to_exclude'.
-* Update: Edit posts/pages/custom post types restrictions add-on: 
-*   - It is compatible now with "Admin Columns" and "Advanced Custom Fields" plugins. "Admin columns" plugin did not showed "Advanced Custom Fields" managed column values, when URE applied edit restrictions. URE excludes now from edit restrictions ACF plugins custom post types 'acf-field-group' and 'acf-field'.
-*   - It is compatible now with "Contact Form 7" plugin. You can restrict access to the CF7 plugin records the same way as to any other custom post type.
-* Core version was updated to version 4.60
-* New: Notification box was replaced with one based on the [jpillora/nofifyjs](https://notifyjs.jpillora.com/) jQuery plugin. It does not move down page content. It disappears automatically after 5 seconds. Click on it to remove it manually.
-* Fix: "Add capability" shows warning styled notification when needed (invalid characters, etc.) instead of a successful one.
-* Fix: Capabilities group uncheck and revert selection is blocked for the administrator role to exclude accident deletion of permissions from administrator role.
-
 
 Full list of changes is available in changelog.txt file.

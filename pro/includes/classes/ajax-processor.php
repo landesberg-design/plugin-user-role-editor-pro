@@ -99,6 +99,16 @@ class URE_Pro_Ajax_Processor extends URE_Ajax_Processor {
     // end of get_posts_edit_access_data_for_role()
     
     
+    // Gravity Forms edit access form view
+    protected function get_gf_edit_access_data_for_role() {
+        $gfa = new URE_GF_Access_Role();
+        $answer = $gfa->get_html();
+        
+        return $answer;
+    }
+    // end of get_gf_edit_access_data_for_role()
+    
+    
     protected function get_show_access_data_for_widget() {
         
         $wsv = new URE_Widgets_Show_View();
@@ -201,6 +211,14 @@ class URE_Pro_Ajax_Processor extends URE_Ajax_Processor {
     // end of nav_menus_admin_access_update()
     
     
+    private function gf_edit_access_update() {
+        
+        $answer = URE_GF_Access_Role::update_data();
+        
+        return $answer;
+    }
+    // end of gf_edit_access_update()
+    
     /**
      * AJAX requests dispatcher
      */    
@@ -248,6 +266,10 @@ class URE_Pro_Ajax_Processor extends URE_Ajax_Processor {
                 $answer = $this->get_posts_edit_access_data_for_role();
                 break;
             }
+            case 'get_gf_edit_access_data_for_role': {
+                $answer = $this->get_gf_edit_access_data_for_role();
+                break;
+            }
             case 'get_show_access_data_for_widget': {
                 $answer = $this->get_show_access_data_for_widget();
                 break;
@@ -282,6 +304,10 @@ class URE_Pro_Ajax_Processor extends URE_Ajax_Processor {
             }
             case 'widgets_admin_access_update': {
                 $answer = $this->widgets_admin_access_update();
+                break;
+            }
+            case 'gf_edit_access_update': {
+                $answer = $this->gf_edit_access_update();
                 break;
             }
           default:

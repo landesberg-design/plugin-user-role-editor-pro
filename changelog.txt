@@ -1,6 +1,32 @@
 User Role Editor Pro CHANGES LOG (full version).
 ================================================
 
+= [4.61] 31.01.2022 =
+* Core version: 4.61.1
+* Update: Marked as compatible with WordPress 5.9.
+* Update: PHP 7.3 is marked as required.
+* New: Gravity Forms Edit Access add-on: It's possible to set what forms is allowed to edit for the selected role.
+* New: Content view restrictions add-on: [user_role_editor] shortcode "roles" and "except_roles" attributes supports the "no_role" value for logged-in users with "No role for this site" - without any role granted.
+* Fix: Content view restrictions add-on: PHP Warning:  A non-numeric value encountered in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/posts-view.php on line 224
+* Fix: Meta boxes access add-on:  PHP Warning:  A non-numeric value encountered in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/meta-boxes.php on line 452
+* Core version was updated to version 4.61.1
+* Update: If installed PHP/WordPress version is lower than required one, script termination ( wp_die() ) was replaced with notice-warning admin notice output.
+* Update: "Settings->User Role Editor->Tools->Reset" button is additionally protected from the unintended/accidental usage by text input field. Manual input of "Permanently delete all custom user roles and capabilities" text is required to enable the "Reset" button.
+* Update: Partial code review and refactoring according with WordPress & PHP coding standards.
+* Fix: "Users->selected user->Capabilities" page: 'select all' checkbox did not work.
+
+= [4.60.2] 21.09.2021 =
+* Core version: 4.60.2
+* Update: Marked as compatible with WordPress 5.8.1
+* Fix: Admin menu access add-on: Blocked admin menu item "SEO->Workouts" (from Yoast SEO plugin) was still available as main menu item.
+* Fix: Multisite: Add-ons data from the main site were not replicated to subsites after click "Update Network" button from the "Network Admin->Users->User Role Editor".
+* Fix: Navigation menus access add-on:
+* - PHP Warning: Undefined variable $result in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/nav-menus-admin-controller.php on line 28
+* - PHP Fatal error: Uncaught TypeError: Unsupported operand types: string + string in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/nav-menus-admin-view.php:146 
+* Core version was updated to version 4.60.2
+* New: URE user capability 'ure_edit_gravityforms_access' was added (for future use).
+* Fix: Multisite: URE_Editor::is_full_network_sync() returned FALSE, instead TRUE for the AJAX call, while call was made from the Network Admin (wp-admin/network/).
+
 = [4.60.1] 21.07.2021 =
 * Core version: 4.60.1
 * Update: Marked as compatible with WordPress 5.8.

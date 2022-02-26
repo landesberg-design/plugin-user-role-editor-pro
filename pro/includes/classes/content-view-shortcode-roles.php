@@ -83,20 +83,26 @@ class URE_Content_View_Shortcode_Roles {
      */
     private static function is_show_for_selected_or($roles) {        
 
-        if (empty($roles)) {
+        if ( empty( $roles ) ) {
             return false;
         }
         
         $current_user_id = get_current_user_id();
         $show_content = false;
-        foreach($roles as $role) {
-            $role = trim($role);
-            if ($role=='none') { 
-                if ($current_user_id===0) { // not logged-in visitor
+        foreach( $roles as $role ) {
+            $role = trim( $role );
+            if ( $role=='none') { 
+                if ($current_user_id===0) { // Not logged-in visitor
                     $show_content = true;
                     break;
                 }
-            } elseif (current_user_can($role)) {
+            } elseif ( $role=='no_role') {
+                $user = wp_get_current_user();
+                if ( empty( $user->roles ) ) {  // No roles for this site
+                    $show_content = true;
+                    break;
+                }                
+            } elseif ( current_user_can( $role ) ) {
                 $show_content = true;
                 break;
             }
@@ -114,7 +120,7 @@ class URE_Content_View_Shortcode_Roles {
      */
     private static function is_show_for_selected_and($roles) {
         
-        if (empty($roles)) {
+        if ( empty( $roles ) ) {
             return false;
         }
 
@@ -123,9 +129,14 @@ class URE_Content_View_Shortcode_Roles {
         foreach($roles as $role) {
             $role = trim($role);
             if ($role=='none') { 
-                if ($current_user_id===0) {  // not logged-in visitor
+                if ($current_user_id===0) {  // Not logged-in visitor
                     break;
                 }
+            } elseif ( $role=='no_role') {
+                $user = wp_get_current_user();
+                if ( empty( $user->roles ) ) {  // Logged-in visitor but without roles for this site
+                    break;
+                }    
             } elseif (!current_user_can($role)) {
                 $show_content = false;
                 break;
@@ -139,20 +150,26 @@ class URE_Content_View_Shortcode_Roles {
     
     private static function is_show_except_selected_or($roles) {        
         
-        if (empty($roles)) {
+        if ( empty( $roles ) ) {
             return false;
         }
         
         $current_user_id = get_current_user_id();
         $show_content = true;
-        foreach($roles as $role) {
-            $role = trim($role);
+        foreach( $roles as $role ) {
+            $role = trim( $role );
             if ($role=='none') { 
-                if ($current_user_id===0) {  // not logged-in visitor
+                if ( $current_user_id===0 ) {  // Not logged-in visitor
                     $show_content = false;
                     break;
                 }
-            } elseif (current_user_can($role)) {
+            } elseif ( $role=='no_role') {
+                $user = wp_get_current_user();
+                if ( empty( $user->roles ) ) {  // Logged-in visitor but without roles for this site
+                    $show_content = false;
+                    break;
+                }                                
+            } elseif ( current_user_can( $role ) ) {
                 $show_content = false;
                 break;
             }
@@ -176,11 +193,18 @@ class URE_Content_View_Shortcode_Roles {
         
         $current_user_id = get_current_user_id();
         $show_content = true; 
-        foreach($roles as $role) {
-            $role = trim($role);
-            if ($role=='none' && $current_user_id===0) {    // not logged-in visitor
+        foreach( $roles as $role ) {
+            $role = trim( $role );
+            if ($role=='none' && $current_user_id===0) {    // Not logged-in visitor
                 $show_content = false;
                 break;
+            }
+            if ( $role=='no_role' && $current_user_id>0) {    
+                $user = wp_get_current_user();
+                if ( empty( $user->roles ) ) {  // Logged-in visitor but without roles for this site
+                    $show_content = false;
+                    break;
+                }
             }
         }
         if (!$show_content) {

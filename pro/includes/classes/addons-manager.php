@@ -121,14 +121,9 @@ class URE_Addons_Manager {
         if ( class_exists('URE_Export_Roles_CSV') ) {
             $this->add('export_roles_csv');
         }
-/* 
- * Prepared for the next release 4.60       
-
         if ( class_exists('URE_Import_Roles_CSV') ) {
             $this->add('import_roles_csv');
         }
- * 
- */
 
     }
     // end of init_addons_list()

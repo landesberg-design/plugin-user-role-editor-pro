@@ -25,14 +25,14 @@ class URE_Meta_Boxes {
         
         add_action('do_meta_boxes', array($this, 'update_meta_boxes_list_copy'), 1);
         $this->hook_to_admin_head();
-        if (class_exists('BuddyPress')) {
+        if ( class_exists('BuddyPress') ) {
             // the same for the BuddyPress plugin meta boxes placed at the User Profile Extended tab
-            add_action('bp_members_admin_user_metaboxes', array($this, 'update_meta_boxes_list_copy'), 90);
-            add_action('bp_members_admin_user_metaboxes', array($this, 'remove_blocked_metaboxes'), 99);
+            add_action('bp_members_admin_user_metaboxes', array($this, 'update_meta_boxes_list_copy'), 90 );
+            add_action('bp_members_admin_user_metaboxes', array($this, 'remove_blocked_metaboxes'), 99 );
         }
-        add_action('add_meta_boxes', array($this, 'hook_to_add_meta_boxes_post_type'), 99, 1);
-        add_action('wp_dashboard_setup', array($this, 'remove_blocked_metaboxes'), 99);
-        add_action('wp_user_dashboard_setup', array($this, 'remove_blocked_metaboxes'), 99);
+        add_action('add_meta_boxes', array($this, 'hook_to_add_meta_boxes_post_type'), 99, 1 );
+        add_action('wp_dashboard_setup', array($this, 'remove_blocked_metaboxes'), 99 );
+        add_action('wp_user_dashboard_setup', array($this, 'remove_blocked_metaboxes'), 99 );
         add_action( 'admin_enqueue_scripts', array($this, 'block_gutenberg_components'), 99 );
         
     }
@@ -41,7 +41,7 @@ class URE_Meta_Boxes {
     
     public function hook_to_add_meta_boxes_post_type($post_type) {
         
-        add_action('add_meta_boxes_'. $post_type, array($this, 'remove_blocked_metaboxes'), 99);
+        add_action('add_meta_boxes_'. $post_type, array($this, 'remove_blocked_metaboxes'), 99 );
                 
     }
     // end of hook_to_add_meta_boxes_post_type()
@@ -55,12 +55,12 @@ class URE_Meta_Boxes {
     private function hook_to_admin_head() {
         $acf_exists = class_exists('acf_controller_post');
         $wpml_exists = class_exists('SitePress');
-        if ($acf_exists || $wpml_exists) {            
-            add_action('admin_head', array($this, 'update_meta_boxes_list_copy'), 90);
-            if ($acf_exists) {
-                add_filter('acf/get_field_groups', array($this, 'remove_blocked_acf_meta_boxes'), 90);
+        if ( $acf_exists || $wpml_exists ) {
+            add_action('admin_head', array($this, 'update_meta_boxes_list_copy'), 90 );
+            if ( $acf_exists ) {
+                add_filter('acf/get_field_groups', array($this, 'remove_blocked_acf_meta_boxes'), 90 );
             }
-            if ($wpml_exists) {
+            if ( $wpml_exists ) {
                 add_action('admin_head', array($this, 'remove_blocked_metaboxes'), 99);
             }
         }
@@ -73,10 +73,10 @@ class URE_Meta_Boxes {
      * @param string $role_id
      * @return array
      */
-    public static function load_data_for_role($role_id) {
+    public static function load_data_for_role( $role_id ) {
         
-        $access_data = get_option(self::ACCESS_DATA_KEY);
-        if (is_array($access_data) && array_key_exists($role_id, $access_data)) {
+        $access_data = get_option( self::ACCESS_DATA_KEY );
+        if ( is_array( $access_data ) && array_key_exists( $role_id, $access_data ) ) {
             $result =  $access_data[$role_id];
         } else {
             $result = array();
@@ -87,35 +87,35 @@ class URE_Meta_Boxes {
     // end of load_data_for_role()
     
     
-    public function load_access_data_for_user($user) {
+    public function load_access_data_for_user( $user ) {
     
-        if (is_object($user)) {
+        if ( is_object( $user ) ) {
             $id = $user->ID;
-        } else if (is_int($user)) {
+        } else if ( is_int( $user ) ) {
             $id = $user;
-            $user = get_user_by('id', $user);
+            $user = get_user_by('id', $user );
         } else {
-            $user = get_user_by('login', $user);
+            $user = get_user_by('login', $user );
             $id = $user->ID;
         }
         
-        $blocked = get_user_meta($user->ID, self::ACCESS_DATA_KEY, true);
-        if (!is_array($blocked)) {
+        $blocked = get_user_meta( $user->ID, self::ACCESS_DATA_KEY, true );
+        if ( !is_array( $blocked ) ) {
             $blocked = array();
         }
         
-        $access_data = get_option(self::ACCESS_DATA_KEY);
-        if (empty($access_data)) {
+        $access_data = get_option( self::ACCESS_DATA_KEY );
+        if ( empty( $access_data ) ) {
             $access_data = array();
         }
         
-        foreach ($user->roles as $role) {
-            if (isset($access_data[$role])) {
-                $blocked = array_merge($blocked, $access_data[$role]);
+        foreach ( $user->roles as $role ) {
+            if ( isset( $access_data[$role] ) ) {
+                $blocked = array_merge( $blocked, $access_data[$role] );
             }
         }
         
-        $blocked = array_unique ($blocked);
+        $blocked = array_unique ( $blocked );
         
         return $blocked;
     }
@@ -126,8 +126,8 @@ class URE_Meta_Boxes {
         
         $keys_to_skip = array('action', 'ure_nonce', '_wp_http_referer', 'ure_object_type', 'ure_object_name', 'user_role');
         $access_data = array();
-        foreach ($_POST as $key=>$value) {
-            if (in_array($key, $keys_to_skip)) {
+        foreach ( $_POST as $key=>$value ) {
+            if ( in_array( $key, $keys_to_skip ) ) {
                 continue;
             }
             $access_data[] = $key;
@@ -138,33 +138,33 @@ class URE_Meta_Boxes {
     // end of get_access_data_from_post()
         
     
-    public function save_access_data_for_role($role_id) {
+    public function save_access_data_for_role( $role_id ) {
         $access_for_role = $this->get_access_data_from_post();
-        $access_data = get_option(self::ACCESS_DATA_KEY);        
-        if (!is_array($access_data)) {
+        $access_data = get_option( self::ACCESS_DATA_KEY );
+        if ( !is_array( $access_data ) ) {
             $access_data = array();
         }
-        if (count($access_for_role)>0) {
+        if ( count( $access_for_role )>0 ) {
             $access_data[$role_id] = $access_for_role;
         } else {
-            unset($access_data[$role_id]);
+            unset( $access_data[$role_id] );
         }
-        update_option(self::ACCESS_DATA_KEY, $access_data);
+        update_option( self::ACCESS_DATA_KEY, $access_data );
     }
     // end of save_access_data_for_role()
     
     
-    public function save_access_data_for_user($user_login) {
+    public function save_access_data_for_user( $user_login ) {
         //$access_for_user = $this->get_access_data_from_post();
         // TODO ...
     }
     // end of save_menu_access_data_for_role()   
                     
     
-    protected function get_allowed_roles($user) {
+    protected function get_allowed_roles( $user ) {
         $allowed_roles = array();
         if (empty($user)) {   // request for Role Editor - work with currently selected role
-            $current_role = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING);
+            $current_role = filter_input( INPUT_POST, 'current_role', FILTER_SANITIZE_STRING );
             $allowed_roles[] = $current_role;
         } else {    // request from user capabilities editor - work with that user roles
             $allowed_roles = $user->roles;
@@ -178,11 +178,11 @@ class URE_Meta_Boxes {
     public function is_restriction_aplicable() {
         
         $multisite = $this->lib->get('multisite');
-        if ($multisite && is_super_admin()) {
+        if ( $multisite && is_super_admin() ) {
             return false;
         }
         
-        if (!$multisite && current_user_can('administrator')) {
+        if ( !$multisite && current_user_can('administrator') ) {
             return false;
         }
 
@@ -449,7 +449,7 @@ class URE_Meta_Boxes {
         if (empty($meta_boxes_list)) {
             $answer = array(
                 'result'=>'success', 
-                'message'=>'Widgets permissions for '+ $ure_object_name, 
+                'message'=>'Widgets permissions for '. $ure_object_name, 
                 'html'=>'<span style="color: red;">'. 
                     esc_html__('Please open post, page and (custom post type) editor page to initilize the list of available meta_boxes', 'user-role-editor') .
                     '</span>');

@@ -256,8 +256,7 @@ class URE_Settings_Pro {
         $manage_plugin_activation_access = $lib->get_option('manage_plugin_activation_access', false);
         $activate_page_permissions_viewer = $lib->get_option('activate_page_permissions_viewer', false);
         $activate_export_roles_csv = $lib->get_option('activate_export_roles_csv', false);
-        //$activate_import_roles_csv = $lib->get_option('activate_import_roles_csv', false);
-        $activate_import_roles_csv = false;
+        $activate_import_roles_csv = $lib->get_option('activate_import_roles_csv', false);        
         if (class_exists('GFForms')) {
             $manage_gf_access = $lib->get_option('manage_gf_access', false);
         }

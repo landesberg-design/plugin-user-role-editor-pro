@@ -19,10 +19,10 @@ class URE_Posts_View {
     // end of __construct()
                 
         
-    protected function get_allowed_roles($user) {
+    protected function get_allowed_roles( $user ) {
         $allowed_roles = array();
-        if (empty($user)) {   // request for Role Editor - work with currently selected role
-            $current_role = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING);
+        if ( empty( $user ) ) {   // request for Role Editor - work with currently selected role
+            $current_role = filter_input( INPUT_POST, 'current_role', FILTER_SANITIZE_STRING );
             $allowed_roles[] = $current_role;
         } else {    // request from user capabilities editor - work with that user roles
             $allowed_roles = $user->roles;
@@ -33,18 +33,17 @@ class URE_Posts_View {
     // end of get_allowed_roles()
                             
     
-    protected function terms_html($blocked_items) {
+    protected function terms_html( $blocked_items ) {
     
         $taxonomies = get_taxonomies(
-                array('public'=>true,
-                      'show_ui'=>true), 
+                array('public'=>true, 'show_ui'=>true), 
                 'objects');
         $terms = array();
-        if (isset($blocked_items['data']['terms']) && is_array($blocked_items['data']['terms'])) {
+        if ( isset($blocked_items['data']['terms'] ) && is_array( $blocked_items['data']['terms'] ) ) {
             $terms = $blocked_items['data']['terms'];
         }
         
-    foreach($taxonomies as $tax_id=>$tax_obj) {
+    foreach( $taxonomies as $tax_id=>$tax_obj ) {
 ?>
     <span style="font-weight: bold;"><?php echo $tax_obj->labels->name;?></span>
 <table id="ure_pva_<?php echo $tax_id;?>_table">
@@ -69,14 +68,14 @@ class URE_Posts_View {
             'pad_counts' => false
         ));
     
-        foreach($categories as $category) {
+        foreach( $categories as $category ) {
 ?>
     <tr>
         <td>   
 <?php     
-            $checked = in_array($category->term_id, $terms) ? 'checked' : '';
+            $checked = in_array( $category->term_id, $terms ) ? 'checked' : '';
             $cb_class = 'ure-cb-col-term-'. $tax_id;
-            $category_name = ($category->parent>0 ? ' - ':'') . $category->name;
+            $category_name = ( $category->parent>0 ? ' - ':'') . $category->name;
 ?>
             <input type="checkbox" name="<?php echo 'cat_'. $category->term_id;?>" id="<?php echo 'cat_'. $category->term_id;?>" class="<?php echo $cb_class;?>" <?php echo $checked; ?> />
         </td>
@@ -96,15 +95,15 @@ class URE_Posts_View {
     // end of terms_html()
     
     
-    protected function page_templates_html($blocked_items) {
+    protected function page_templates_html( $blocked_items ) {
         
         $blocked_templates = array();
-        if (isset($blocked_items['data']['page_templates']) && is_array($blocked_items['data']['page_templates'])) {
+        if ( isset( $blocked_items['data']['page_templates'] ) && is_array( $blocked_items['data']['page_templates'] ) ) {
             $blocked_templates = $blocked_items['data']['page_templates'];
         }
         
         $all_templates = get_page_templates();
-        if (count($all_templates)==0) {
+        if ( count($all_templates)==0 ) {
             return;
         }
         ksort($all_templates);        
@@ -118,8 +117,8 @@ class URE_Posts_View {
         </tr>
 <?php        
         $cb_class = 'ure-cb-col-template';
-        foreach(array_keys($all_templates) as $key) {
-            $checked = in_array($all_templates[$key], $blocked_templates) ? 'checked' : '';
+        foreach( array_keys($all_templates) as $key ) {
+            $checked = in_array( $all_templates[$key], $blocked_templates ) ? 'checked' : '';
             $dom_conv = str_replace(array('.','/','_'), '-', $all_templates[$key]);
             $id = 'templ_'. $dom_conv;
 ?>        
@@ -127,7 +126,7 @@ class URE_Posts_View {
             <td>
                 <input type="checkbox" name="<?php echo $id; ?>" id="<?php echo $id; ?>" class="<?php echo $cb_class;?>" <?php echo $checked; ?>
             </td>    
-            <td><?php echo esc_html($key); ?></td>
+            <td><?php echo esc_html( $key ); ?></td>
             <td><?php echo $all_templates[$key]; ?></td>
         </tr>    
 <?php
@@ -140,30 +139,30 @@ class URE_Posts_View {
     // end of page_templates_html()
     
     
-    public function get_html($user=null) {        
+    public function get_html( $user=null ) {
                         
-        $allowed_roles = $this->get_allowed_roles($user);                         
-        if (empty($user)) {
+        $allowed_roles = $this->get_allowed_roles( $user );
+        if ( empty( $user ) ) {
             $ure_object_type = 'role';
             $ure_object_name = $allowed_roles[0];
-            $blocked_items = URE_Content_View_Restrictions_Controller::load_data_for_role($ure_object_name);
+            $blocked_items = URE_Content_View_Restrictions_Controller::load_data_for_role( $ure_object_name );
         } else {
             $ure_object_type = 'user';
             $ure_object_name = $user->user_login;
-            $blocked_items = URE_Content_View_Restrictions_Controller::load_access_data_for_user($ure_object_name);
+            $blocked_items = URE_Content_View_Restrictions_Controller::load_access_data_for_user( $ure_object_name );
         }
         
         $posts_list = '';
-        if (isset($blocked_items['data']['posts']) && is_array($blocked_items['data']['posts'])) {
-            $posts_list = implode(', ', $blocked_items['data']['posts']);
+        if ( isset( $blocked_items['data']['posts']) && is_array( $blocked_items['data']['posts'] ) ) {
+            $posts_list = implode(', ', $blocked_items['data']['posts'] );
         }
         
         $posts_authors_list = '';
-        if (isset($blocked_items['data']['authors']) && is_array($blocked_items['data']['authors'])) {
-            $posts_authors_list = implode(', ', $blocked_items['data']['authors']);
+        if ( isset($blocked_items['data']['authors'] ) && is_array( $blocked_items['data']['authors'] ) ) {
+            $posts_authors_list = implode(', ', $blocked_items['data']['authors'] );
         }
         
-        if (isset($blocked_items['data']['own_data_only']) && $blocked_items['data']['own_data_only']==1) {
+        if ( isset( $blocked_items['data']['own_data_only'] ) && $blocked_items['data']['own_data_only']==1 ) {
             $own_data_only = 1;
         } else {
             $own_data_only = 0;
@@ -195,8 +194,8 @@ class URE_Posts_View {
     <hr/>
     
 <?php
-    $this->terms_html($blocked_items);   
-    $this->page_templates_html($blocked_items);
+    $this->terms_html( $blocked_items );   
+    $this->page_templates_html( $blocked_items );
     
 ?>  
     <input type="hidden" name="action" id="action" value="ure_update_posts_view_access" />
@@ -215,13 +214,17 @@ class URE_Posts_View {
         $html = ob_get_contents();
         ob_end_clean();
         
-        if (!empty($user)) {
+        if ( !empty( $user ) ) {
             $current_object = $user->user_login;
         } else {
             $current_object = $allowed_roles[0];
         }
      
-        return array('result'=>'success', 'message'=>'Posts view permissions for '+ $current_object, 'html'=>$html);
+        return array(
+            'result'=>'success', 
+            'message'=>'Posts view permissions for '. $current_object, 
+            'html'=>$html 
+                );
     }
     // end of get_html()
 

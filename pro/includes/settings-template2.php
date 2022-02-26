@@ -107,7 +107,6 @@ $admin_menu_access_url_args_link_display = $activate_admin_menu_access_module==1
       </tr>
 <?php
 /*
-?>
       <tr>
         <td>
             <input type="checkbox" name="activate_import_roles_csv" id="activate_import_roles_csv" value="1" 

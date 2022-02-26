@@ -69,7 +69,7 @@ class URE_Posts_Edit_Access_Role {
         $args = URE_Posts_Edit_Access_Role_Controller::prepare_form_data($role_id);                        
         $html = URE_Posts_Edit_Access_View::get_html($args);
         
-        return array('result'=>'success', 'message'=>'Posts edit permissions for role:'+ $role_id, 'html'=>$html);
+        return array('result'=>'success', 'message'=>'Posts edit permissions for role:'. $role_id, 'html'=>$html);
     }
     // end of get_html()
     
