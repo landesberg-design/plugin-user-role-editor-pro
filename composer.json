@@ -1,5 +1,5 @@
 {
-    "name": "not-a-robot-agency/user-role-editor-pro",
+    "name": "landesberg-design/user-role-editor-pro",
     "type": "wordpress-plugin",
     "description": "",
     "require": {
@@ -7,8 +7,7 @@
     },
     "authors": [
         {
-            "name": "Chris Jezowicz",
-            "email": "chris@landesbergdesign.com"
+            "name": "Vladimir Garagulia"
         }
     ],
     "autoload": {
