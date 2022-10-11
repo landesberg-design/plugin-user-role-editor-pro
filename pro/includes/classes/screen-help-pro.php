@@ -76,9 +76,8 @@ class URE_Screen_Help_Pro {
         if (class_exists('GFForms')) {
             $text .=         
                 '<li><strong>' . esc_html__('Activate per form user access management for Gravity Forms', 'user-role-editor'). '</strong> - ' .
-                esc_html__('after turning on this option you may see the new “Gravity Forms Restrictions” section at the user profile '.
-                'with input field “Allow access to forms with ID (comma separated)”. This field will appear at profile '.
-                'of those users only who have at least one capability from the “Gravity Forms” capabilities list, '.
+                esc_html__('after turning on this option you may see the new “Gravity Forms Restrictions” section at the user profile. '.
+                'This section will appear at profile of those users only who have at least one capability from the “Gravity Forms” capabilities list, '.
                 'e.g. “gravityforms_edit_forms”, “gravityforms_view_entries”, etc. Look ', 'user-role-editor') .
                 '<a href="http://role-editor.com/restrict-users-access-gravity-forms/">'.
                 esc_html__('support video', 'user-role-editor'). '</a> ' . 
@@ -91,7 +90,7 @@ class URE_Screen_Help_Pro {
                 'Other users (except administrator) will not see the "restricted content" at the post or page. '.
                 'When this option is turned off, all restricted content input earlier, becomes available as usual content.', 'user-role-editor').'</li>'.
                  '<li><strong>' . esc_html__('Activate content view restrictions', 'user-role-editor') .'</strong> - '.
-                esc_html__('Allows to set which roles may or prohibited view what post/page, custom post type', 'user-role-editor') .
+                esc_html__('Allows manage view permissions for posts/pages/custom post types, user roles', 'user-role-editor') .
                 ' (<a href="https://www.role-editor.com/content-view-access-restriction-selected-roles/">'. esc_html__('more info...', 'user-role-editor') .'</a>)</li>';    
                                           
         return $text;

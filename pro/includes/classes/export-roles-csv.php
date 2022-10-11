@@ -42,6 +42,7 @@
                             <input type="hidden" name="ure_settings_tools_exec" value="1" />
                             <input type="hidden" name="ure_export_roles_csv_exec" value="1" />
                             <input type="hidden" name="ure_tab_idx" value="<?php echo $tab_idx; ?>" />
+                            <input type="hidden" name="ure_nonce" value="<?php echo wp_create_nonce('user-role-editor');?>" />
                         </form>                
                     </div>    
 
@@ -106,8 +107,16 @@
         if ( $export_roles_csv!=1 ) {
             return false;
         }
+                        
+        if ( empty($_POST['ure_nonce']) || !wp_verify_nonce($_POST['ure_nonce'], 'user-role-editor') ) {
+            $message = esc_html__('Wrong nonce. Action prohibitied.', 'user-role-editor');
+            $this->lib->show_message( $message, true );
+            return false;
+        }                        
         
         if ( !current_user_can('ure_export_roles') ) {
+            $message = esc_html__('You do not have sufficient permissions to export roles.', 'user-role-editor');
+            $this->lib->show_message( $message, true );
             return false;
         }
         

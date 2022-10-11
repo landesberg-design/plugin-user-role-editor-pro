@@ -243,6 +243,8 @@ class User_Role_Editor_Pro extends User_Role_Editor {
                     'close_button' => esc_html__('Close', 'user-role-editor'),
                     'export_button' => esc_html__('Export', 'user-role-editor'),
                     'import_button' => esc_html__('Import', 'user-role-editor'),
+                    'select_file_with_roles' => esc_html__('Select file with roles', 'user-role-editor'),
+                    '_button' => esc_html__('Import', 'user-role-editor'),
                     'no_allowed_args_to_send' => esc_html__('Input allowed arguments before try to save it.', 'user-role-editor')
                 ));
         

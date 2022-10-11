@@ -43,13 +43,15 @@ class URE_Posts_Edit_Access_View {
      * @param array $args
      * @return string
      */
-    static public function get_html($args) {
+    static public function get_html( $args ) {
         global $pagenow;
         
-        extract($args);
+        extract( $args );
+        $lib = URE_Lib_Pro::get_instance();
+        $wp_post_types = $lib->_get_post_types();
         
         ob_start();
-        if (isset($user_profile)) { // show section at user profile
+        if ( isset( $user_profile ) ) { // show section at user profile
             echo '<h3>'. esc_html__('Posts/Pages/Custom Post Types Editor Restrictions', 'user-role-editor') .'</h3>'.PHP_EOL;
         } else {    // show form with data for currently selected role at User Role Editor dialog window
 ?>
@@ -77,31 +79,48 @@ class URE_Posts_Edit_Access_View {
     }
 ?>
                 </td>
+            </tr>
+            <tr>
+                <th scope="row">               
+                    <?php esc_html_e('Post types', 'user-role-editor'); ?>
+                </th>
+        	<td>
+<?php
+    foreach( $wp_post_types as $post_type_id ) {
+        $selected = in_array( $post_type_id, $post_types );
+        $post_type_obj = get_post_type_object( $post_type_id);
+?>
+                    <input type="checkbox" name="ure_post_types[]" id="ure_<?php echo $post_type_id;?>" value="<?php echo $post_type_id;?>" <?php  checked($selected, true);?> />&nbsp;
+                    <label for="ure_<?php echo $post_type_id;?>"><?php echo $post_type_obj->labels->singular_name .'&nbsp;('. $post_type_id .')';?></label><br/>
+<?php
+    }
+?>
+        	</td>
+            </tr>
+            <tr>
+                <th scope="row">               
+                    <?php esc_html_e('Own data only', 'user-role-editor'); ?>
+                </th>
+        	<td>
+                    <input type="checkbox" name="ure_own_data_only" id="ure_own_data_only" value="1" <?php  checked($own_data_only, 1);?> />
+        	</td>
+            </tr>
+            <tr>
+        	<th scope="row">               
+                   <?php esc_html_e('with post ID (comma separated)', 'user-role-editor'); ?>
+                </th>
+                <td>
+                    <input type="text" name="ure_posts_list" id="ure_posts_list" value="<?php echo $posts_list; ?>" size="40" />
+                </td>
             </tr>    
             <tr>
-        			<th scope="row">               
-               <?php esc_html_e('Own data only', 'user-role-editor'); ?>
-           </th>
-        			<td>
-               <input type="checkbox" name="ure_own_data_only" id="ure_own_data_only" value="1" <?php  checked($own_data_only, 1);?> />
-        			</td>
-        		</tr>
-        		<tr>
-        			<th scope="row">               
-               <?php esc_html_e('with post ID (comma separated)', 'user-role-editor'); ?>
-           </th>
-        			<td>
-               <input type="text" name="ure_posts_list" id="ure_posts_list" value="<?php echo $posts_list; ?>" size="40" />
-        			</td>
-        		</tr>    
-          <tr>
-        			<th scope="row">               
-               <?php esc_html_e('with category/taxonomy ID (comma separated)', 'user-role-editor'); ?>
-           </th>
-        			<td>
-               <input type="text" name="ure_categories_list" id="ure_categories_list" value="<?php echo $categories_list; ?>" size="40" />
-        			</td>
-        		</tr>
+		<th scope="row">               
+                   <?php esc_html_e('with category/taxonomy ID (comma separated)', 'user-role-editor'); ?>
+               </th>
+                <td>
+                    <input type="text" name="ure_categories_list" id="ure_categories_list" value="<?php echo $categories_list; ?>" size="40" />
+                </td>
+            </tr>
 <?php
             if ($show_authors) {
 ?>

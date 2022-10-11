@@ -96,6 +96,26 @@ class URE_Posts_Edit_Access_User_Meta {
         
     }
     // end of delete_posts_list()
+
+
+    public function get_post_types( $user_id ) {
+        
+        $value = get_user_meta( $user_id, $this->umk_post_types, true );
+        if ( !is_array( $value ) ) {
+            $value = array();
+        }
+        
+        return $value;
+    }
+    // end of get_posts_types()
+
+    
+    public function set_post_types( $user_id, $value ) {
+        
+        update_user_meta( $user_id, $this->umk_post_types, $value );
+        
+    }
+    // end of delete_post_types()
     
     
     public function delete_post_types($user_id) {        

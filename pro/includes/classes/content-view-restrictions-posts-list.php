@@ -593,16 +593,19 @@ private function check_roles_for_prohibited($roles, $post_id=0 ) {
     private function get_posts_for_term( $term_id ) {
     
         $term = get_term( $term_id );
-        if (empty( $term ) ) {
+        if ( empty( $term ) || is_a( $term, 'WP_Error') ) {
             return array();
         }
         
+        $post_type = get_taxonomy( $term->taxonomy )->object_type[0];
+        
         $posts = get_posts( array(
             'numberposts' => -1,
+            'post_type' => $post_type,
             'tax_query' => array(
                 array(
                     'taxonomy' => $term->taxonomy,
-                    'field' => 'id',
+                    'field' => 'id',                    
                     'terms' => $term->term_id, // Where term_id of Term 1 is "1".
                     'include_children' => false
                 )
@@ -946,6 +949,15 @@ private function check_roles_for_prohibited($roles, $post_id=0 ) {
         
         $query_post_type = $wp_query->get( 'post_type' );
         if ( $this->is_bbpress_topic_reply_query( $query_post_type ) ) {
+            return;
+        }
+                
+        $post_type = get_post_type_object( $query_post_type );
+        if ( !is_a( $post_type, 'WP_Post_Type') ) {
+            return;
+        }
+        if ( !$post_type->public ) {
+            // hide public post types only, do not touch the hidden and service one.
             return;
         }
         

@@ -83,7 +83,8 @@ class URE_GF_Access_Role {
             return array('result'=>'error', 'message'=>'Not enough permissions');
         }        
         
-        $role_id = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING );
+        $lib = URE_Lib_Pro::get_instance();
+        $role_id = $lib->get_request_var('current_role', 'post'); 
         if ( empty( $role_id ) ) {
             return array('result'=>'error', 'message'=>'Role ID is required');
         }
@@ -108,7 +109,7 @@ class URE_GF_Access_Role {
         }        
         
         $fl0 = isset( $_POST['values']['ure_gf_list'] ) ? $_POST['values']['ure_gf_list'] : '';        
-        $fl1 = filter_var( $fl0, FILTER_SANITIZE_STRING );        
+        $fl1 = URE_Base_Lib::filter_string_var( $fl0 );        
         $fl = URE_Utils::filter_int_array_from_str( $fl1 );
         $forms_list = implode(', ', $fl);
         
@@ -155,13 +156,13 @@ class URE_GF_Access_Role {
             return $answer;
         }
         
-        $ure_object_type = ( isset( $_POST['values']['ure_object_type'] ) ) ? filter_var( $_POST['values']['ure_object_type'], FILTER_SANITIZE_STRING ) : false;
+        $ure_object_type = ( isset( $_POST['values']['ure_object_type'] ) ) ? URE_Base_Lib::filter_string_var( $_POST['values']['ure_object_type'] ) : false;
         if ( $ure_object_type!=='role') {
             $answer['message'] = esc_html__('URE: Gravity forms edit access: Wrong object type. Data was not updated.', 'user-role-editor');
             return $answer;
         }
         
-        $role_id = isset( $_POST['values']['ure_object_name'] ) ? filter_var( $_POST['values']['ure_object_name'], FILTER_SANITIZE_STRING ) : false;
+        $role_id = isset( $_POST['values']['ure_object_name'] ) ? URE_Base_Lib::filter_string_var( $_POST['values']['ure_object_name'] ) : false;
         if ( empty( $role_id ) ) {
             $answer['message'] = esc_html__('URE: Gravity forms edit access: Empty role ID. Data was not updated', 'user-role-editor');
             return $answer;

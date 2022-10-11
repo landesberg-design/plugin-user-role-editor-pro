@@ -47,7 +47,7 @@ class URE_GF_Access_User {
         
         $umk_what_to_do = $wpdb->prefix . self::UMK_WHAT_TO_DO;
         $what_to_do = get_user_meta( $user_id, $umk_what_to_do, true);
-        if ( $what_to_do!=0 && $what_to_do!=1 && $what_to_do!=2 ) {
+        if ( $what_to_do!=1 && $what_to_do!=2 && $what_to_do!=3 ) {
             $what_to_do = 1; // Allow (by default)
         }
         
@@ -105,7 +105,7 @@ class URE_GF_Access_User {
         $lib = URE_Lib_Pro::get_instance();
         // update Gravity Forms access restriction: what to do value
         $what_to_do = (int) $lib->get_request_var('ure_gf_what_to_do', 'post', 'int');
-        if ( $what_to_do!=1 && $what_to_do!=2 && $what_to_do!=0 ) {  // sanitize user input
+        if ( $what_to_do!=1 && $what_to_do!=2 && $what_to_do!=3 ) {  // sanitize user input
             $what_to_do = 1;
         }
         $umk_what_to_do = $wpdb->prefix . self::UMK_WHAT_TO_DO;
@@ -146,13 +146,17 @@ class URE_GF_Access_User {
     
 
     private static function get_roles_data( $user_id, $user_what_to_do ) {
-        
-        $all_forms = array();
+                
         $access_data = get_option( URE_GF_Access_Role::ACCESS_DATA_KEY );
         if ( !is_array( $access_data ) ) {
-            return $allowed_forms;
+            $data = array(
+                'what_to_do'=>1,
+                'forms_list'=>array()
+        );
+            return $data;
         }
         
+        $all_forms = array();        
         $what_to_do = -1;   // Not initialized
         $user = get_user_by('id', $user_id );
         foreach( $user->roles as $role_id ) {
@@ -166,7 +170,7 @@ class URE_GF_Access_User {
             
             if ( $what_to_do===-1 ) {
                 // Take value directly from user or from the 1st role granted to user
-                $what_to_do = $user_what_to_do>0 ? $user_what_to_do : $role_data['what_to_do'];
+                $what_to_do = ( $user_what_to_do>0 && $user_what_to_do<3 ) ? $user_what_to_do : $role_data['what_to_do'];
             }
             if ( $what_to_do!=$role_data['what_to_do'] ) {
                 // skip role as it has different what to do value 
@@ -197,7 +201,7 @@ class URE_GF_Access_User {
         $user_data = self::get_options( $current_user_id );                                
         
         $roles_data = self::get_roles_data( $current_user_id, $user_data['what_to_do'] );
-        if ( $user_data['what_to_do']==0 ) { // Look at roles
+        if ( $user_data['what_to_do']==3 ) { // Look at roles
             if ( $roles_data['what_to_do']==1 ) {   // Allow
                 $allowed_forms = $roles_data['forms_list'];
             } elseif ( $roles_data['what_to_do']==2 ) { // Prohibit
@@ -208,7 +212,7 @@ class URE_GF_Access_User {
             $user_allowed_forms = URE_Utils::filter_int_array_from_str( $user_data['forms_list'] );
             $allowed_forms = array_merge( $user_allowed_forms, $roles_data['forms_list'] );
         } elseif ( $user_data['what_to_do']==2 ) {    // Prohibit 
-            $gf_list = self::get_fg_list();
+            $gf_list = self::get_gf_list();
             $prohibited_forms0 = URE_Utils::filter_int_array_from_str( $user_data['forms_list'] );
             $prohibited_forms = array_merge( $prohibited_forms0, $roles_data['forms_list'] );
             $allowed_forms = array_diff( $gf_list, $prohibited_forms );

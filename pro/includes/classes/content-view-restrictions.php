@@ -815,7 +815,17 @@ class URE_Content_View_Restrictions {
     private static function get_page_path_from_url() {
 
         $url = substr( untrailingslashit( parse_url( $_SERVER['REQUEST_URI'] , PHP_URL_PATH) ), 1);
-        $home_url = basename( untrailingslashit( parse_url( home_url(), PHP_URL_PATH ) ) );
+        $home_url = home_url();
+        if ( !empty( $home_url ) ) {
+            $home_url = parse_url( $home_url, PHP_URL_PATH );
+            if ( !empty( $home_url ) ) {
+                $home_url = basename( untrailingslashit( $home_url ) );
+            } else {
+                $home_url = '';
+            }
+        } else {
+            $home_url = '';
+        }
         $path = substr( $url, strlen( $home_url ) );
         if (substr( $path, 0, 1)==DIRECTORY_SEPARATOR) {
             $path = substr( $path, 1);

@@ -127,8 +127,8 @@ class URE_Widgets_Show_View {
     public function get_html() {
         global $wp_roles;
         
-        $widget_id = filter_input(INPUT_POST, 'widget_id', FILTER_SANITIZE_STRING);
-        $data = URE_Widgets_Show_Controller::load($widget_id);       
+        $widget_id = $this->lib->get_request_var('widget_id', 'post' );
+        $data = URE_Widgets_Show_Controller::load( $widget_id );       
         
         ob_start();
 ?>

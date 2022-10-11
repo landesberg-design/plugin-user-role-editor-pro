@@ -59,24 +59,25 @@ class URE_Widgets_Show_Controller {
     // save data
     public static function save() {
         $lib = URE_Lib::get_instance();
-        if (!$lib->is_right_admin_path('widgets.php')) {
+        if ( !$lib->is_right_admin_path('widgets.php') ) {
             return;
         }
-        $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
-        if ($action!=='ure_update_widgets_show_access_data') {
+        $lib = URE_Lib_Pro::get_instance();
+        $action = $lib->get_request_var('action', 'post');
+        if ( $action!=='ure_update_widgets_show_access_data') {
             return;
         }
-        if (empty($_POST['ure_nonce']) || !wp_verify_nonce($_POST['ure_nonce'], 'user-role-editor')) {
-            wp_die('Wrong nonce value. Action prohibited', 'Access error', 403);
+        if ( empty( $_POST['ure_nonce'] ) || !wp_verify_nonce( $_POST['ure_nonce'], 'user-role-editor') ) {
+            wp_die('Wrong nonce value. Action prohibited', 'Access error', 403 );
         }
         
-        $widget_id = filter_input(INPUT_POST, 'ure_widget_id', FILTER_SANITIZE_STRING);
+        $widget_id = $lib->get_request_var('ure_widget_id', 'post');
         if (empty($widget_id)) {
-            wp_die('Wrong widget ID. Action prohibited', 'Access error', 403);
+            wp_die('Wrong widget ID. Action prohibited', 'Access error', 403 );
         }
         
-        $access_model = filter_input(INPUT_POST, 'ure_access_model', FILTER_SANITIZE_NUMBER_INT);
-        if (empty($access_model)) {
+        $access_model = filter_input( INPUT_POST, 'ure_access_model', FILTER_SANITIZE_NUMBER_INT );
+        if ( empty( $access_model ) ) {
             $access_model = 1;  // Do not show for selected roles
         }
         
@@ -84,7 +85,7 @@ class URE_Widgets_Show_Controller {
                         
         $data = get_option(self::ACCESS_DATA_KEY, array());
         $data[$widget_id] = array('access_model'=>$access_model, 'roles'=>$roles);
-        update_option(self::ACCESS_DATA_KEY, $data);
+        update_option( self::ACCESS_DATA_KEY, $data );
         
     }
     // end of save()

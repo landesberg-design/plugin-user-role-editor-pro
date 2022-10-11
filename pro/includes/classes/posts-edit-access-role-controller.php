@@ -14,12 +14,16 @@ class URE_Posts_Edit_Access_Role_Controller {
             
         $access_data = get_option(URE_Posts_Edit_Access_Role::ACCESS_DATA_KEY);
         if (is_array($access_data) && array_key_exists($role_id, $access_data)) {
-            $result =  $access_data[$role_id];            
+            $result =  $access_data[$role_id];
+            if ( !isset( $result['data']['post_types'] ) ) {
+                $result['data']['post_types'] = array();    // data structure changed, v. 4.63
+            }
         } else {
             $result = array(
-                'restriction_type'=>1,
+                'restriction_type'=>1,                
                 'own_data_only'=>0,
                 'data'=>array(
+                    'post_types'=>array(),
                     'posts'=>array(),
                     'terms'=>array(),
                     'authors'=>array()                    
@@ -43,8 +47,9 @@ class URE_Posts_Edit_Access_Role_Controller {
                 
         $data = self::load_data($role_id);
         $result = array();
-        $result['restriction_type'] = $data['restriction_type'];
+        $result['restriction_type'] = $data['restriction_type'];        
         $result['own_data_only'] = $data['own_data_only'];
+        $result['post_types'] = $data['data']['post_types'];
         $result['posts_list'] = implode(', ', $data['data']['posts']);
         $result['post_authors_list'] = implode(', ', $data['data']['authors']);
         $result['categories_list'] = implode(', ', $data['data']['terms']);
@@ -66,6 +71,25 @@ class URE_Posts_Edit_Access_Role_Controller {
     }
     // end of prepare_form_data()
     
+    
+    public static function extract_wp_post_types_from_post() {
+        
+        $lib = URE_Lib_Pro::get_instance();
+        $wp_post_types = $lib->_get_post_types();
+        
+        $ure_post_types = ( isset( $_POST['ure_post_types'] ) && is_array( $_POST['ure_post_types'] ) ) ? $_POST['ure_post_types'] : array();
+        $post_types = array();
+        foreach( $ure_post_types as $post_type ) {
+            if ( in_array( $post_type, $wp_post_types ) ) {
+                $post_types[] = $post_type;
+            }
+        }
+        
+        return $post_types;
+    }
+    // end of extract_wp_post_types_from_post()
+    
+    
         
     private static function get_data_from_post() {
         
@@ -75,14 +99,19 @@ class URE_Posts_Edit_Access_Role_Controller {
             $restriction_type = 1;  // use 'Allow' as default value
         }        
         $own_data_only = $lib->get_request_var('ure_own_data_only', 'post', 'checkbox');
-        
+        $post_types = self::extract_wp_post_types_from_post();
+        $posts = URE_Utils::filter_int_list_from_post('ure_posts_list');
+        $authors = URE_Utils::filter_int_list_from_post('ure_post_authors_list');
+        $terms = URE_Utils::filter_int_list_from_post('ure_categories_list');
+                
         $data = array(
             'restriction_type'=>$restriction_type, 
             'own_data_only'=>$own_data_only,
             'data'=>array(
-                'posts'=>URE_Utils::filter_int_list_from_post('ure_posts_list'),
-                'authors'=>URE_Utils::filter_int_list_from_post('ure_post_authors_list'),
-                'terms'=>URE_Utils::filter_int_list_from_post('ure_categories_list')
+                'post_types'=>$post_types,
+                'posts'=>$posts,
+                'authors'=>$authors,
+                'terms'=>$terms
                     )
                 );         
         
@@ -91,16 +120,16 @@ class URE_Posts_Edit_Access_Role_Controller {
     // end of get_data_from_post()
     
     
-    private static function save_data($role_id) {
+    private static function save_data( $role_id ) {
         global $wp_roles;
         
         $access_for_role = self::get_data_from_post();
         $access_data = get_option(URE_Posts_Edit_Access_Role::ACCESS_DATA_KEY);        
-        if (!is_array($access_data)) {
+        if ( !is_array( $access_data ) ) {
             $access_data = array();
         }
 
-        $role_exists = isset($wp_roles->roles[$role_id]);
+        $role_exists = isset( $wp_roles->roles[$role_id] );
 
         if (count($access_for_role)>0) {
             if ($role_exists) {
@@ -124,7 +153,7 @@ class URE_Posts_Edit_Access_Role_Controller {
         if (!isset($_POST['action']) || $_POST['action']!=='ure_update_posts_edit_access') {
             return false;
         }
-        
+            
         $lib = URE_Lib_Pro::get_instance();
         $editor = URE_Editor::get_instance();
         
@@ -132,6 +161,7 @@ class URE_Posts_Edit_Access_Role_Controller {
             $editor->set_notification( esc_html__('URE: you have not enough permissions to use this add-on.', 'user-role-editor') );
             return false;
         }
+               
         $object_type = $lib->get_request_var('ure_object_type', 'post');
         if ($object_type!=='role') {
             $editor->set_notification( esc_html__('URE: posts edit access: Wrong object type. Data was not updated.', 'user-role-editor') );
@@ -142,8 +172,8 @@ class URE_Posts_Edit_Access_Role_Controller {
             $editor->set_notification( esc_html__('URE: posts edit access: Empty object name. Data was not updated', 'user-role-editor') );
             return false;
         }
-                        
-        self::save_data($object_name);        
+                
+        self::save_data( $object_name );        
         $editor->set_notification( esc_html__('Posts edit access data was updated successfully', 'user-role-editor') );
         
         return true;

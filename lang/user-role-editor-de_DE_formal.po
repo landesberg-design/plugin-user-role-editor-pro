@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: User Role Editor Pro v. 4.59.4\n"
+"Project-Id-Version: User Role Editor Pro v4.60.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-12 16:25+0700\n"
-"PO-Revision-Date: 2021-05-12 16:27+0700\n"
+"POT-Creation-Date: 2022-03-04 12:24+0700\n"
+"PO-Revision-Date: 2022-03-04 12:24+0700\n"
 "Last-Translator: Thorsten Wollenhöfer <thorsten.wollenhoefer@gmail.com>\n"
 "Language-Team: Thorsten Wollenhöfer <thorsten.wollenhoefer@gmail.com>\n"
 "Language: de_DE\n"
@@ -21,70 +21,70 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: includes/classes/capabilities-groups-manager.php:44
+#: includes/classes/capabilities-groups-manager.php:45
 msgid "Custom Post Types"
 msgstr "Benutzerdefinierte Beitragstypen"
 
-#: includes/classes/capabilities-groups-manager.php:75
-#: includes/classes/editor.php:1477 includes/classes/user-role-editor.php:571
+#: includes/classes/capabilities-groups-manager.php:84
+#: includes/classes/editor.php:1481 includes/classes/user-role-editor.php:571
 #: includes/classes/user-role-editor.php:602
 #: pro/includes/classes/user-role-editor-pro.php:191
 msgid "User Role Editor"
 msgstr "User Role Editor"
 
-#: includes/classes/capabilities-groups-manager.php:90
+#: includes/classes/capabilities-groups-manager.php:103
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: includes/classes/capabilities-groups-manager.php:91
-#: includes/classes/capabilities-groups-manager.php:111
+#: includes/classes/capabilities-groups-manager.php:108
+#: includes/classes/capabilities-groups-manager.php:135
 msgid "Core"
 msgstr "Kern"
 
-#: includes/classes/capabilities-groups-manager.php:110
+#: includes/classes/capabilities-groups-manager.php:130
 msgid "All"
 msgstr "Alle"
 
-#: includes/classes/capabilities-groups-manager.php:112
+#: includes/classes/capabilities-groups-manager.php:140
 #: includes/classes/user-role-editor.php:543 includes/settings-template.php:20
 msgid "General"
 msgstr "Allgemein"
 
-#: includes/classes/capabilities-groups-manager.php:113
-#: pro/includes/classes/admin-menu-access.php:1106
+#: includes/classes/capabilities-groups-manager.php:145
+#: pro/includes/classes/admin-menu-access.php:1124
 msgid "Themes"
 msgstr "Themes"
 
-#: includes/classes/capabilities-groups-manager.php:114
+#: includes/classes/capabilities-groups-manager.php:150
 msgid "Posts"
 msgstr "Beiträge"
 
-#: includes/classes/capabilities-groups-manager.php:115
+#: includes/classes/capabilities-groups-manager.php:155
 msgid "Pages"
 msgstr "Seiten"
 
-#: includes/classes/capabilities-groups-manager.php:116
-#: pro/includes/classes/admin-menu-access.php:1112
+#: includes/classes/capabilities-groups-manager.php:160
+#: pro/includes/classes/admin-menu-access.php:1130
 #: pro/includes/classes/plugins-access-role-view.php:32
 #: pro/includes/classes/plugins-access-role.php:50
 msgid "Plugins"
 msgstr "Erweiterungen"
 
-#: includes/classes/capabilities-groups-manager.php:117
-#: pro/includes/classes/admin-menu-access.php:1100
+#: includes/classes/capabilities-groups-manager.php:165
+#: pro/includes/classes/admin-menu-access.php:1118
 msgid "Users"
 msgstr "Benutzer"
 
-#: includes/classes/capabilities-groups-manager.php:121
+#: includes/classes/capabilities-groups-manager.php:187
 #: includes/classes/user-role-editor.php:561 includes/settings-template.php:36
 msgid "Multisite"
 msgstr "Multiseite"
 
-#: includes/classes/capabilities-groups-manager.php:123
+#: includes/classes/capabilities-groups-manager.php:194
 msgid "Deprecated"
 msgstr "Veraltet"
 
-#: includes/classes/capabilities-groups-manager.php:126
+#: includes/classes/capabilities-groups-manager.php:201
 msgid "Custom capabilities"
 msgstr "Benutzerdefinierte Berechtigungen"
 
@@ -92,46 +92,46 @@ msgstr "Benutzerdefinierte Berechtigungen"
 msgid "Error: Capability name must contain latin characters and digits only!"
 msgstr "Fehler: Berechtigungsname darf nur Buchstaben und Zahlen enthalten!"
 
-#: includes/classes/capability.php:47
+#: includes/classes/capability.php:48
 msgid "Error: this capability is used internally by WordPress"
 msgstr "Fehler: Diese Berechtigung wird von WordPress intern benutzt"
 
-#: includes/classes/capability.php:54
+#: includes/classes/capability.php:56
 msgid "Error: this word is used by WordPress as a role ID"
 msgstr "Fehler: Dieses Wort wird von WordPress als Rollen-ID verwendet"
 
-#: includes/classes/capability.php:79 includes/classes/capability.php:190
-#: includes/classes/editor.php:945 includes/classes/editor.php:1014
-#: includes/classes/editor.php:1065 includes/classes/editor.php:1126
-#: includes/classes/editor.php:1272 includes/classes/editor.php:1314
+#: includes/classes/capability.php:89 includes/classes/capability.php:209
+#: includes/classes/editor.php:949 includes/classes/editor.php:1018
+#: includes/classes/editor.php:1069 includes/classes/editor.php:1130
+#: includes/classes/editor.php:1276 includes/classes/editor.php:1318
 #: includes/classes/user-role-editor.php:655
 msgid "Insufficient permissions to work with User Role Editor"
 msgstr "Unzureichende Berechtigung um mit Benutzerrolleneditor zu arbeiten"
 
-#: includes/classes/capability.php:84
+#: includes/classes/capability.php:95
 msgid "Wrong Request"
 msgstr "Falsche Anforderung"
 
-#: includes/classes/capability.php:99
+#: includes/classes/capability.php:115
 #, php-format
 msgid "Capability %s was added successfully"
 msgstr "Berechtigung %s wurde erfolgreich hinzugefügt"
 
-#: includes/classes/capability.php:101
+#: includes/classes/capability.php:117
 #, php-format
 msgid "Capability %s exists already"
 msgstr "Berechtigung %s existiert bereits"
 
-#: includes/classes/capability.php:197 includes/classes/capability.php:202
+#: includes/classes/capability.php:216 includes/classes/capability.php:221
 msgid "There are no capabilities available for deletion!"
 msgstr "Es sind keine Berechtigungen zum Löschen vorhanden!"
 
-#: includes/classes/capability.php:208
+#: includes/classes/capability.php:227
 #, php-format
 msgid "Capability %s was removed successfully"
 msgstr "Berechtigung %s wurde erfolgreich entfernt"
 
-#: includes/classes/capability.php:212
+#: includes/classes/capability.php:231
 msgid "capabilities were removed successfully"
 msgstr "Berechtigungen wurden erfolgreich entfernt"
 
@@ -152,31 +152,31 @@ msgstr "Rolle"
 msgid "does not exist"
 msgstr "existiert nicht"
 
-#: includes/classes/editor.php:897
+#: includes/classes/editor.php:901
 msgid "Role is updated successfully"
 msgstr "Rolle wurde erfolgreich aktualisiert"
 
-#: includes/classes/editor.php:899
+#: includes/classes/editor.php:903
 msgid "Roles are updated for all network"
 msgstr "Rollen wurden Netzwerkweit aktualisiert"
 
-#: includes/classes/editor.php:902
+#: includes/classes/editor.php:906
 msgid "Error occurred during role(s) update"
 msgstr "Fehler beim Aktualisieren der Rolle (n) aufgetreten"
 
-#: includes/classes/editor.php:906
+#: includes/classes/editor.php:910
 msgid "User capabilities are updated successfully"
 msgstr "Nutzerberechtigungen wurden erfolgreich aktualisiert"
 
-#: includes/classes/editor.php:908
+#: includes/classes/editor.php:912
 msgid "Error occurred during user update"
 msgstr "Bei der Benutzeraktualisierung ist ein Fehler aufgetreten"
 
-#: includes/classes/editor.php:978
+#: includes/classes/editor.php:982
 msgid "Error: Role ID is empty!"
 msgstr "Fehler: Rollen-ID ist leer!"
 
-#: includes/classes/editor.php:987
+#: includes/classes/editor.php:991
 msgid ""
 "Error: Role ID must contain latin characters, digits, hyphens or underscore "
 "only!"
@@ -184,7 +184,7 @@ msgstr ""
 "Fehler: Rollen-ID darf nur Buchstaben, Zahlen, Bindestrich oder Unterstrich "
 "enthalten!"
 
-#: includes/classes/editor.php:993
+#: includes/classes/editor.php:997
 msgid ""
 "Error: WordPress does not support numeric Role name (ID). Add latin "
 "characters to it."
@@ -192,364 +192,364 @@ msgstr ""
 "Fehler: WordPress unterstützt keine numerischen Rollennamen (ID). Nur "
 "Buchstaben verwenden."
 
-#: includes/classes/editor.php:1027
+#: includes/classes/editor.php:1031
 #, php-format
 msgid "Role %s exists already"
 msgstr "Rolle %s existiert bereits"
 
-#: includes/classes/editor.php:1046
+#: includes/classes/editor.php:1050
 msgid "Error is encountered during new role create operation"
 msgstr "Beim Erstellen der neuen Rolle trat ein Fehler auf"
 
-#: includes/classes/editor.php:1053
+#: includes/classes/editor.php:1057
 #, php-format
 msgid "Role %s is created successfully"
 msgstr "Rolle %s wurde erfolgreich erstellt"
 
-#: includes/classes/editor.php:1138
+#: includes/classes/editor.php:1142
 msgid "Error: Empty role display name is not allowed."
 msgstr "Fehler: Leerer Anzeigename einer Rolle ist nicht erlaubt."
 
-#: includes/classes/editor.php:1145
+#: includes/classes/editor.php:1149
 #, php-format
 msgid "Role %s does not exists"
 msgstr "Rolle %s existiert nicht"
 
-#: includes/classes/editor.php:1158
+#: includes/classes/editor.php:1162
 #, php-format
 msgid "Role %s is renamed to %s successfully"
 msgstr "Rolle %s wurde erfolgreich zu %s umbenannt"
 
-#: includes/classes/editor.php:1223
+#: includes/classes/editor.php:1227
 msgid "Role does not exist"
 msgstr "Rolle existiert nicht"
 
-#: includes/classes/editor.php:1227
+#: includes/classes/editor.php:1231
 msgid "You can not delete role"
 msgstr "Sie können die Rolle nicht löschen"
 
-#: includes/classes/editor.php:1253
+#: includes/classes/editor.php:1257
 msgid "There are no roles for deletion"
 msgstr "Es sind keine Rollen zum Löschen vorhanden"
 
-#: includes/classes/editor.php:1281
+#: includes/classes/editor.php:1285
 #: pro/includes/classes/import-single-role.php:389
 msgid "Wrong role ID"
 msgstr "Falsche Rollen-ID"
 
-#: includes/classes/editor.php:1290
+#: includes/classes/editor.php:1294
 msgid "Unused roles are deleted successfully"
 msgstr "Unbenutzte Rollen wurden erfolgreich gel&ouml;scht"
 
-#: includes/classes/editor.php:1292
+#: includes/classes/editor.php:1296
 #, php-format
 msgid "Role %s is deleted successfully"
 msgstr "Rolle %s wurde erfolgreich gel&ouml;scht"
 
-#: includes/classes/editor.php:1320
+#: includes/classes/editor.php:1324
 msgid ""
 "This method is only for a single site of WordPress multisite installation."
 msgstr ""
 "Diese Methode ist nur für eine einzelne Website einer WordPress-Installation "
 "mit mehreren Websites geeignet."
 
-#: includes/classes/editor.php:1324
+#: includes/classes/editor.php:1328
 msgid "Wrong request. Default role can not be empty"
 msgstr "Falsche Anfrage. Die Standardrolle darf nicht leer sein"
 
-#: includes/classes/editor.php:1336
+#: includes/classes/editor.php:1340
 #, php-format
 msgid "Default role for new users is set to %s successfully"
 msgstr ""
 "Voreingestellte Rolle für neuen Nutzer auf %s wurde erfolgreich eingerichtet"
 
-#: includes/classes/editor.php:1338
+#: includes/classes/editor.php:1342
 msgid "Error encountered during default role change operation"
 msgstr "Beim &Auml;ndern der voreingestellten Rolle trat ein Fehler auf"
 
-#: includes/classes/editor.php:1341
+#: includes/classes/editor.php:1345
 msgid "Can not set Administrator role as a default one"
 msgstr "Administratorrolle als Standard kann nicht gesetzt werden"
 
-#: includes/classes/editor.php:1343
+#: includes/classes/editor.php:1347
 msgid "This role does not exist - "
 msgstr "Diese Rolle existiert nicht - "
 
-#: includes/classes/editor.php:1388
+#: includes/classes/editor.php:1392
 msgid "User Roles are restored to WordPress default values. "
 msgstr ""
 "Benutzerrollen wurden wieder auf voreingestellte WordPress-Werte "
 "zurückgesetzt. "
 
-#: includes/classes/editor.php:1516
+#: includes/classes/editor.php:1520
 msgid "Error: wrong request"
 msgstr "Fehler: Falsche Anfrage"
 
-#: includes/classes/editor.php:1545
+#: includes/classes/editor.php:1549
 msgid "Editor"
 msgstr "Editor"
 
-#: includes/classes/editor.php:1546
+#: includes/classes/editor.php:1550
 msgid "Author"
 msgstr "Autor"
 
-#: includes/classes/editor.php:1547
+#: includes/classes/editor.php:1551
 msgid "Contributor"
 msgstr "Mitarbeiter"
 
-#: includes/classes/editor.php:1548
+#: includes/classes/editor.php:1552
 msgid "Subscriber"
 msgstr "Abonnent"
 
-#: includes/classes/editor.php:1550
+#: includes/classes/editor.php:1554
 msgid "Switch themes"
 msgstr "Themes wechseln"
 
-#: includes/classes/editor.php:1551
+#: includes/classes/editor.php:1555
 msgid "Edit themes"
 msgstr "Themes bearbeiten"
 
-#: includes/classes/editor.php:1552
+#: includes/classes/editor.php:1556
 msgid "Activate plugins"
 msgstr "Plugin aktivieren"
 
-#: includes/classes/editor.php:1553
+#: includes/classes/editor.php:1557
 msgid "Edit plugins"
 msgstr "Plugin bearbeiten"
 
-#: includes/classes/editor.php:1554
+#: includes/classes/editor.php:1558
 msgid "Edit users"
 msgstr "Nutzer bearbeiten"
 
-#: includes/classes/editor.php:1555
+#: includes/classes/editor.php:1559
 msgid "Edit files"
 msgstr "Dateien bearbeiten"
 
-#: includes/classes/editor.php:1556
+#: includes/classes/editor.php:1560
 msgid "Manage options"
 msgstr "Einstellungen verwalten"
 
-#: includes/classes/editor.php:1557
+#: includes/classes/editor.php:1561
 msgid "Moderate comments"
 msgstr "Kommentare moderieren"
 
-#: includes/classes/editor.php:1558
+#: includes/classes/editor.php:1562
 msgid "Manage categories"
 msgstr "Kategorien verwalten"
 
-#: includes/classes/editor.php:1559
+#: includes/classes/editor.php:1563
 msgid "Manage links"
 msgstr "Links verwalten"
 
-#: includes/classes/editor.php:1560
+#: includes/classes/editor.php:1564
 msgid "Upload files"
 msgstr "Dateien hochladen"
 
-#: includes/classes/editor.php:1561
+#: includes/classes/editor.php:1565
 #: pro/includes/classes/import-roles-csv.php:52
-#: pro/includes/classes/import-roles-csv.php:99
 #: pro/includes/classes/import-single-role.php:98
 #: pro/includes/classes/user-role-editor-pro.php:245
+#: pro/includes/classes/user-role-editor-pro.php:247
 msgid "Import"
 msgstr "Importieren"
 
-#: includes/classes/editor.php:1562
+#: includes/classes/editor.php:1566
 msgid "Unfiltered html"
 msgstr "Ungefiltertes html"
 
-#: includes/classes/editor.php:1563
+#: includes/classes/editor.php:1567
 msgid "Edit posts"
 msgstr "Beiträge bearbeiten"
 
-#: includes/classes/editor.php:1564
+#: includes/classes/editor.php:1568
 msgid "Edit others posts"
 msgstr "Beiträge anderer bearbeiten"
 
-#: includes/classes/editor.php:1565
+#: includes/classes/editor.php:1569
 msgid "Edit published posts"
 msgstr "Veröffentlichte Beiträge bearbeiten"
 
-#: includes/classes/editor.php:1566
+#: includes/classes/editor.php:1570
 msgid "Publish posts"
 msgstr "Beiträge veröffentlichen"
 
-#: includes/classes/editor.php:1567
+#: includes/classes/editor.php:1571
 msgid "Edit pages"
 msgstr "Seiten bearbeiten"
 
-#: includes/classes/editor.php:1568
+#: includes/classes/editor.php:1572
 msgid "Read"
 msgstr "Lesen"
 
-#: includes/classes/editor.php:1569
+#: includes/classes/editor.php:1573
 msgid "Level 10"
 msgstr "Level 10"
 
-#: includes/classes/editor.php:1570
+#: includes/classes/editor.php:1574
 msgid "Level 9"
 msgstr "Level 9"
 
-#: includes/classes/editor.php:1571
+#: includes/classes/editor.php:1575
 msgid "Level 8"
 msgstr "Level 8"
 
-#: includes/classes/editor.php:1572
+#: includes/classes/editor.php:1576
 msgid "Level 7"
 msgstr "Level 7"
 
-#: includes/classes/editor.php:1573
+#: includes/classes/editor.php:1577
 msgid "Level 6"
 msgstr "Level 6"
 
-#: includes/classes/editor.php:1574
+#: includes/classes/editor.php:1578
 msgid "Level 5"
 msgstr "Level 5"
 
-#: includes/classes/editor.php:1575
+#: includes/classes/editor.php:1579
 msgid "Level 4"
 msgstr "Level 4"
 
-#: includes/classes/editor.php:1576
+#: includes/classes/editor.php:1580
 msgid "Level 3"
 msgstr "Level 3"
 
-#: includes/classes/editor.php:1577
+#: includes/classes/editor.php:1581
 msgid "Level 2"
 msgstr "Level 2"
 
-#: includes/classes/editor.php:1578
+#: includes/classes/editor.php:1582
 msgid "Level 1"
 msgstr "Level 1"
 
-#: includes/classes/editor.php:1579
+#: includes/classes/editor.php:1583
 msgid "Level 0"
 msgstr "Level 0"
 
-#: includes/classes/editor.php:1580
+#: includes/classes/editor.php:1584
 msgid "Edit others pages"
 msgstr "Seiten anderer bearbeiten"
 
-#: includes/classes/editor.php:1581
+#: includes/classes/editor.php:1585
 msgid "Edit published pages"
 msgstr "Veröffentlichte Seiten bearbeiten"
 
-#: includes/classes/editor.php:1582
+#: includes/classes/editor.php:1586
 msgid "Publish pages"
 msgstr "Seiten veröffentlichen"
 
-#: includes/classes/editor.php:1583
+#: includes/classes/editor.php:1587
 msgid "Delete pages"
 msgstr "Seiten l&ouml;schen"
 
-#: includes/classes/editor.php:1584
+#: includes/classes/editor.php:1588
 msgid "Delete others pages"
 msgstr "Seiten anderer l&ouml;schen"
 
-#: includes/classes/editor.php:1585
+#: includes/classes/editor.php:1589
 msgid "Delete published pages"
 msgstr "Ver&ouml;ffentlichte Seiten l&ouml;schen"
 
-#: includes/classes/editor.php:1586
+#: includes/classes/editor.php:1590
 msgid "Delete posts"
 msgstr "Beiträge l&ouml;schen"
 
-#: includes/classes/editor.php:1587
+#: includes/classes/editor.php:1591
 msgid "Delete others posts"
 msgstr "Beiträge anderer l&ouml;schen"
 
-#: includes/classes/editor.php:1588
+#: includes/classes/editor.php:1592
 msgid "Delete published posts"
 msgstr "Ver&ouml;ffentlichte Beiträge l&ouml;schen"
 
-#: includes/classes/editor.php:1589
+#: includes/classes/editor.php:1593
 msgid "Delete private posts"
 msgstr "Private Beiträge l&ouml;schen"
 
-#: includes/classes/editor.php:1590
+#: includes/classes/editor.php:1594
 msgid "Edit private posts"
 msgstr "Private Beiträge bearbeiten"
 
-#: includes/classes/editor.php:1591
+#: includes/classes/editor.php:1595
 msgid "Read private posts"
 msgstr "Private Beiträge lesen"
 
-#: includes/classes/editor.php:1592
+#: includes/classes/editor.php:1596
 msgid "Delete private pages"
 msgstr "Private Seiten l&ouml;schen"
 
-#: includes/classes/editor.php:1593
+#: includes/classes/editor.php:1597
 msgid "Edit private pages"
 msgstr "Private Seiten bearbeiten"
 
-#: includes/classes/editor.php:1594
+#: includes/classes/editor.php:1598
 msgid "Read private pages"
 msgstr "Private Seiten lesen"
 
-#: includes/classes/editor.php:1595
+#: includes/classes/editor.php:1599
 msgid "Delete users"
 msgstr "Nutzer l&ouml;schen"
 
-#: includes/classes/editor.php:1596
+#: includes/classes/editor.php:1600
 msgid "Create users"
 msgstr "Nutzer erstellen"
 
-#: includes/classes/editor.php:1597
+#: includes/classes/editor.php:1601
 msgid "Unfiltered upload"
 msgstr "Ungefilterter Upload"
 
-#: includes/classes/editor.php:1598
+#: includes/classes/editor.php:1602
 msgid "Edit dashboard"
 msgstr "Dashboard bearbeiten"
 
-#: includes/classes/editor.php:1599
+#: includes/classes/editor.php:1603
 msgid "Update plugins"
 msgstr "Erweiterungen aktualisieren"
 
-#: includes/classes/editor.php:1600
+#: includes/classes/editor.php:1604
 msgid "Delete plugins"
 msgstr "Erweiterungen l&ouml;schen"
 
-#: includes/classes/editor.php:1601
+#: includes/classes/editor.php:1605
 msgid "Install plugins"
 msgstr "Erweiterungen installieren"
 
-#: includes/classes/editor.php:1602
+#: includes/classes/editor.php:1606
 msgid "Update themes"
 msgstr "Themes aktualisieren"
 
-#: includes/classes/editor.php:1603
+#: includes/classes/editor.php:1607
 msgid "Install themes"
 msgstr "Themen installieren"
 
-#: includes/classes/editor.php:1604
+#: includes/classes/editor.php:1608
 msgid "Update core"
 msgstr "Systemkern aktualisieren"
 
-#: includes/classes/editor.php:1605
+#: includes/classes/editor.php:1609
 msgid "List users"
 msgstr "Nutzer auflisten"
 
-#: includes/classes/editor.php:1606
+#: includes/classes/editor.php:1610
 msgid "Remove users"
 msgstr "Nutzer entfernen"
 
-#: includes/classes/editor.php:1607
+#: includes/classes/editor.php:1611
 msgid "Add users"
 msgstr "Nutzer hinzufügen"
 
-#: includes/classes/editor.php:1608
+#: includes/classes/editor.php:1612
 msgid "Promote users"
 msgstr "Unterst&uuml;tze Nutzer"
 
-#: includes/classes/editor.php:1609
+#: includes/classes/editor.php:1613
 msgid "Edit theme options"
 msgstr "Theme Einstellungen bearbeiten"
 
-#: includes/classes/editor.php:1610
+#: includes/classes/editor.php:1614
 msgid "Delete themes"
 msgstr "Themes löschen"
 
-#: includes/classes/editor.php:1611
+#: includes/classes/editor.php:1615
 #: pro/includes/classes/export-roles-csv.php:40
 #: pro/includes/classes/export-single-role.php:55
 #: pro/includes/classes/user-role-editor-pro.php:244
@@ -700,13 +700,11 @@ msgid "Show deprecated capabilities"
 msgstr "Zeige abgelehnte Berechtigungen"
 
 #: includes/classes/role-view.php:383
-#: pro/includes/classes/import-roles-csv.php:86
 #: pro/includes/classes/import-roles-view.php:26
 msgid "If checked, then apply action to ALL sites of this Network"
 msgstr "Wenn angehakt, dann gilt die Aktion f&uuml;r ALLE Seiten des Netzwerks"
 
-#: includes/classes/role-view.php:396 includes/classes/tools.php:30
-#: pro/includes/classes/import-roles-csv.php:91
+#: includes/classes/role-view.php:396 includes/classes/tools.php:31
 #: pro/includes/classes/import-roles-view.php:31
 msgid "Apply to All Sites"
 msgstr "Auf alle Seiten anwenden"
@@ -839,18 +837,18 @@ msgstr "Benutzerrolleneditor Einstellungen wurden aktualisiert"
 msgid "Default Roles are updated"
 msgstr "Voreingestellte Rollen wurden aktualisiert"
 
-#: includes/classes/tools.php:19
+#: includes/classes/tools.php:20
 msgid "WARNING!"
 msgstr "WARNUNG!"
 
-#: includes/classes/tools.php:21
+#: includes/classes/tools.php:22
 msgid ""
 "Resetting will setup default user roles and capabilities from WordPress core."
 msgstr ""
 "Das Zurücksetzen stellt die Grundeinstellung für Rollen und Berechtigungen "
 "wie unmittelbar nach der Installation von WordPress wieder ein."
 
-#: includes/classes/tools.php:22
+#: includes/classes/tools.php:23
 msgid ""
 "If any plugins (such as WooCommerce, S2Member and many others) have changed "
 "user roles and capabilities during installation, those changes will be LOST!"
@@ -859,7 +857,7 @@ msgstr ""
 "Berechtigungen während der Installation verändert haben, gehen diese "
 "Änderungen VERLOREN!"
 
-#: includes/classes/tools.php:23
+#: includes/classes/tools.php:24
 msgid ""
 "For more information on how to undo undesired changes and restore plugins "
 "capabilities in case you lost them by mistake go to: "
@@ -868,7 +866,7 @@ msgstr ""
 "Plugins wiederherstellen können, falls Sie sie versehentlich verloren haben, "
 "finden Sie unter: "
 
-#: includes/classes/tools.php:31
+#: includes/classes/tools.php:32
 msgid ""
 "If checked, then apply action to ALL sites. Main site only is affected in "
 "other case."
@@ -876,15 +874,15 @@ msgstr ""
 "Wenn diese Option aktiviert ist, wenden Sie die Aktion auf ALLE Websites an. "
 "Die Hauptseite ist nur in anderen Fällen betroffen."
 
-#: includes/classes/tools.php:36
+#: includes/classes/tools.php:40
 msgid "Reset Roles to its original state"
 msgstr "Rollen auf ihren ursprünglichen Status zurücksetzen"
 
-#: includes/classes/tools.php:36 includes/classes/user-role-editor.php:792
+#: includes/classes/tools.php:40 includes/classes/user-role-editor.php:794
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: includes/classes/tools.php:60
+#: includes/classes/tools.php:64
 msgid "Tools: Reset: User Roles were initialized"
 msgstr "Extras: Zurücksetzen: Benutzerrollen wurden initialisiert"
 
@@ -939,7 +937,7 @@ msgstr "Sie haben nicht die Berechtigung diesen Nutzer zu bearbeiten."
 
 #: includes/classes/user-role-editor.php:494
 #: includes/classes/user-role-editor.php:507
-#: pro/includes/classes/admin-menu-access.php:1118
+#: pro/includes/classes/admin-menu-access.php:1136
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -959,23 +957,24 @@ msgstr ""
 "Sie haben keine ausreichende Berechtigung um Einstellungen im "
 "Benutzerrolleneditor vorzunehmen."
 
-#: includes/classes/user-role-editor.php:742
-#: includes/classes/user-role-editor.php:789
+#: includes/classes/user-role-editor.php:745
+#: includes/classes/user-role-editor.php:791
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: includes/classes/user-role-editor.php:743
-#: includes/classes/user-role-editor.php:790
+#: includes/classes/user-role-editor.php:746
+#: includes/classes/user-role-editor.php:792
 msgid "Yes"
 msgstr "Ja"
 
-#: includes/classes/user-role-editor.php:744
-#: includes/classes/user-role-editor.php:791
+#: includes/classes/user-role-editor.php:747
+#: includes/classes/user-role-editor.php:793
 msgid "No"
 msgstr "Nein"
 
-#: includes/classes/user-role-editor.php:745
+#: includes/classes/user-role-editor.php:748
 #: pro/includes/classes/admin-menu-view.php:41
+#: pro/includes/classes/gf-access-role.php:47
 #: pro/includes/classes/meta-boxes-access.php:57
 #: pro/includes/classes/nav-menus-admin-view.php:44
 #: pro/includes/classes/other-roles-access.php:81
@@ -989,24 +988,24 @@ msgstr "Nein"
 msgid "Update"
 msgstr "Aktualisierung"
 
-#: includes/classes/user-role-editor.php:746
+#: includes/classes/user-role-editor.php:749
 msgid "Please confirm permissions update"
 msgstr "Bitte bestätigen Sie die Berechtigungsaktualisierung"
 
-#: includes/classes/user-role-editor.php:747
+#: includes/classes/user-role-editor.php:750
 msgid "Add New Role"
 msgstr "Neue Rolle hinzuf&uuml;gen"
 
-#: includes/classes/user-role-editor.php:748
-#: includes/classes/user-role-editor.php:753
+#: includes/classes/user-role-editor.php:751
+#: includes/classes/user-role-editor.php:756
 msgid "Rename Role"
 msgstr "Rolle umbenennen"
 
-#: includes/classes/user-role-editor.php:749
+#: includes/classes/user-role-editor.php:752
 msgid " Role name (ID) can not be empty!"
 msgstr " Rollen Name (ID) darf nicht leer sein!"
 
-#: includes/classes/user-role-editor.php:750
+#: includes/classes/user-role-editor.php:753
 msgid ""
 " Role name (ID) must contain latin characters, digits, hyphens or underscore "
 "only!"
@@ -1014,7 +1013,7 @@ msgstr ""
 " Rollenname (ID) darf nur Buchstaben, Zahlen, Binde- oder Unterstrich "
 "enthalten!"
 
-#: includes/classes/user-role-editor.php:751
+#: includes/classes/user-role-editor.php:754
 msgid ""
 " WordPress does not support numeric Role name (ID). Add latin characters to "
 "it."
@@ -1022,43 +1021,38 @@ msgstr ""
 " WordPress unterstützt keine numerischen Rollennamen (ID). Füge Buchstaben "
 "hinzu."
 
-#: includes/classes/user-role-editor.php:752
+#: includes/classes/user-role-editor.php:755
 msgid "Add Role"
 msgstr "Rolle hinzufügen"
 
-#: includes/classes/user-role-editor.php:754
+#: includes/classes/user-role-editor.php:757
 msgid "Delete Role"
 msgstr "Rolle löschen"
 
-#: includes/classes/user-role-editor.php:755
+#: includes/classes/user-role-editor.php:758
 #: pro/includes/classes/plugins-access-user.php:135
 #: pro/includes/classes/widgets-show-view.php:101
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: includes/classes/user-role-editor.php:756
+#: includes/classes/user-role-editor.php:759
 msgid "Add Capability"
 msgstr "Berechtigung hinzufügen"
 
-#: includes/classes/user-role-editor.php:757
-#: includes/classes/user-role-editor.php:761
+#: includes/classes/user-role-editor.php:760
+#: includes/classes/user-role-editor.php:763
 msgid "Delete Capability"
 msgstr "Berechtigung löschen"
 
-#: includes/classes/user-role-editor.php:758
-#: includes/classes/user-role-editor.php:798
-msgid "Continue?"
-msgstr "Fortsetzen?"
-
-#: includes/classes/user-role-editor.php:759
+#: includes/classes/user-role-editor.php:761
 msgid "Default Role"
 msgstr "Voreingestellte Rolle"
 
-#: includes/classes/user-role-editor.php:760
+#: includes/classes/user-role-editor.php:762
 msgid "Set New Default Role"
 msgstr "Setzt neue voreingestellte Rolle"
 
-#: includes/classes/user-role-editor.php:762
+#: includes/classes/user-role-editor.php:764
 msgid ""
 "Warning! Be careful - removing critical capability could crash some plugin "
 "or other custom code"
@@ -1066,11 +1060,11 @@ msgstr ""
 "Achtung! Seien Sie vorsichtig - Beim Entfernen von entscheidenden "
 "Berechtigungen können Erweiterungen oder benutzerdefinierter Code abstürzen"
 
-#: includes/classes/user-role-editor.php:763
+#: includes/classes/user-role-editor.php:765
 msgid " Capability name (ID) can not be empty!"
 msgstr " Berechtigungsname (ID) darf nicht leer sein!"
 
-#: includes/classes/user-role-editor.php:764
+#: includes/classes/user-role-editor.php:766
 msgid ""
 " Capability name (ID) must contain latin characters, digits, hyphens or "
 "underscore only!"
@@ -1078,11 +1072,11 @@ msgstr ""
 " Berechtigungsname (ID) darf nur Buchstaben, Zahlen, Binde- oder Unterstrich "
 "enthalten!"
 
-#: includes/classes/user-role-editor.php:793
+#: includes/classes/user-role-editor.php:795
 msgid "DANGER!"
 msgstr "VORSICHT!"
 
-#: includes/classes/user-role-editor.php:794
+#: includes/classes/user-role-editor.php:796
 msgid ""
 " Resetting will restore default user roles and capabilities from WordPress "
 "core."
@@ -1090,7 +1084,7 @@ msgstr ""
 " Das Zurücksetzen setzt die Grundeinstellung des WordPress Kernels wieder in "
 "Kraft."
 
-#: includes/classes/user-role-editor.php:795
+#: includes/classes/user-role-editor.php:797
 msgid ""
 "If any plugins (such as WooCommerce, S2Member and many others) have changed "
 "user roles and capabilities during installation, all those changes will be "
@@ -1100,7 +1094,7 @@ msgstr ""
 "Berechtigungen während der Installation verändert haben, gehen diese "
 "Änderungen VERLOREN!"
 
-#: includes/classes/user-role-editor.php:796
+#: includes/classes/user-role-editor.php:798
 msgid ""
 "For more information on how to undo undesired changes and restore plugin "
 "capabilities go to"
@@ -1108,6 +1102,10 @@ msgstr ""
 "Weitere Informationen, wie Sie unerwünschte Änderungen rückgängig machen und "
 "Plugins wiederherstellen können, falls Sie sie versehentlich verloren haben, "
 "finden Sie unter"
+
+#: includes/classes/user-role-editor.php:800
+msgid "Continue?"
+msgstr "Fortsetzen?"
 
 #: includes/classes/user-view.php:59
 msgid "Switch&nbsp;To"
@@ -1243,32 +1241,32 @@ msgstr "Zugriffsbeschränkungen für Plugins für die Aktivierung / Deaktivierun
 msgid "Posts/Pages view access restrictions"
 msgstr "Zugriffsbeschränkungen für Beiträge/Seiten ansehen"
 
-#: pro/includes/classes/admin-menu-access.php:1068
+#: pro/includes/classes/admin-menu-access.php:1086
 msgid "My Sites"
 msgstr "Meine Seiten"
 
-#: pro/includes/classes/admin-menu-access.php:1081
+#: pro/includes/classes/admin-menu-access.php:1099
 msgid "Network Admin"
 msgstr "Netzwerkverwaltung"
 
-#: pro/includes/classes/admin-menu-access.php:1088
-#: pro/includes/classes/admin-menu-access.php:1159
+#: pro/includes/classes/admin-menu-access.php:1106
+#: pro/includes/classes/admin-menu-access.php:1177
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: pro/includes/classes/admin-menu-access.php:1094
+#: pro/includes/classes/admin-menu-access.php:1112
 msgid "Sites"
 msgstr "Seiten"
 
-#: pro/includes/classes/admin-menu-access.php:1170
+#: pro/includes/classes/admin-menu-access.php:1188
 msgid "New Post"
 msgstr "Neuer Beitrag"
 
-#: pro/includes/classes/admin-menu-access.php:1180
+#: pro/includes/classes/admin-menu-access.php:1198
 msgid "Manage Comments"
 msgstr "Kommentare verwalten"
 
-#: pro/includes/classes/admin-menu-access.php:1188
+#: pro/includes/classes/admin-menu-access.php:1206
 msgid "Visit Site"
 msgstr "Zur Seite"
 
@@ -1309,7 +1307,8 @@ msgstr "Admin-Menü"
 #: pro/includes/classes/admin-menu-view.php:154
 #: pro/includes/classes/admin-menu-view.php:371
 #: pro/includes/classes/admin-menu.php:179
-#: pro/includes/classes/nav-menus-admin-controller.php:150
+#: pro/includes/classes/gf-access-role.php:154
+#: pro/includes/classes/nav-menus-admin-controller.php:152
 #: pro/includes/classes/widgets-admin-controller.php:311
 msgid "URE: Insufficient permissions to use this add-on"
 msgstr ""
@@ -1323,7 +1322,7 @@ msgstr "Blockiere Menüpunkte:"
 #: pro/includes/classes/admin-menu-view.php:191
 #: pro/includes/classes/other-roles.php:200
 #: pro/includes/classes/plugins-access-view.php:47
-#: pro/includes/classes/posts-view.php:178
+#: pro/includes/classes/posts-view.php:177
 #: pro/includes/classes/widgets-admin-view.php:156
 #: pro/includes/classes/widgets-show-view.php:138
 msgid "Selected"
@@ -1332,7 +1331,7 @@ msgstr "Ausgewählte"
 #: pro/includes/classes/admin-menu-view.php:193
 #: pro/includes/classes/other-roles.php:202
 #: pro/includes/classes/plugins-access-view.php:49
-#: pro/includes/classes/posts-view.php:180
+#: pro/includes/classes/posts-view.php:179
 #: pro/includes/classes/widgets-admin-view.php:158
 #: pro/includes/classes/widgets-show-view.php:140
 msgid "Not Selected"
@@ -1436,18 +1435,21 @@ msgstr "Rollen werden nur von der Hauptsite exportiert."
 msgid "Export user roles to CSV"
 msgstr "Exportieren Sie Benutzerrollen in CSV"
 
-#: pro/includes/classes/export-single-role.php:90
-msgid "Role ID is empty"
-msgstr "Rollen-ID ist leer"
-
+#: pro/includes/classes/export-roles-csv.php:112
 #: pro/includes/classes/export-single-role.php:95
+#: pro/includes/classes/import-roles-csv.php:73
 #: pro/includes/classes/import-single-role.php:301
 msgid "Wrong nonce. Action prohibitied."
 msgstr "Falscher NONCE. Aktion verboten."
 
+#: pro/includes/classes/export-roles-csv.php:118
 #: pro/includes/classes/export-single-role.php:100
 msgid "You do not have sufficient permissions to export roles."
 msgstr "Sie haben nicht die nötige Berechtigung, um Rollen zu exportieren."
+
+#: pro/includes/classes/export-single-role.php:90
+msgid "Role ID is empty"
+msgstr "Rollen-ID ist leer"
 
 #: pro/includes/classes/export-single-role.php:105
 msgid "Role requested for export does not exist"
@@ -1493,32 +1495,119 @@ msgstr "Nicht angemeldet"
 msgid "Not logged-in and logged-in users with roles"
 msgstr "Nicht angemeldete und angemeldete Benutzer mit Rollen"
 
-#: pro/includes/classes/gf-access.php:97
+#: pro/includes/classes/gf-access-role.php:45
+#: pro/includes/classes/gf-access-view.php:32
+msgid "Gravity Forms"
+msgstr "Gravity Forms"
+
+#: pro/includes/classes/gf-access-role.php:46
+msgid "Gravity Forms Edit Access"
+msgstr "Gravity Forms Zugriff bearbeiten"
+
+#: pro/includes/classes/gf-access-role.php:48
+msgid "Grant to the role some of Gravity Forms capabilities first"
+msgstr "Gewähren Sie der Rolle zunächst einige der Gravity Forms-Funktionen"
+
+#: pro/includes/classes/gf-access-role.php:160
+msgid ""
+"URE: Gravity forms edit access: Wrong object type. Data was not updated."
+msgstr ""
+"URE: Gravity forms edit access: Falscher Objekttyp. Die Daten wurden nicht "
+"aktualisiert."
+
+#: pro/includes/classes/gf-access-role.php:166
+msgid "URE: Gravity forms edit access: Empty role ID. Data was not updated"
+msgstr ""
+"URE: Gravity Forms Bearbeitungszugriff: Leere Rollen-ID. Daten wurden nicht "
+"aktualisiert"
+
+#: pro/includes/classes/gf-access-role.php:172
+msgid ""
+"URE: Gravity forms edit access: role does not exists. Data was not updated"
+msgstr ""
+"URE: Gravity forms edit access: Rolle existiert nicht. Daten wurden nicht "
+"aktualisiert"
+
+#: pro/includes/classes/gf-access-role.php:179
+msgid "Gravity forms edit access data was updated successfully"
+msgstr "Gravity Forms-Zugangsdaten wurden erfolgreich aktualisiert"
+
+#: pro/includes/classes/gf-access-view.php:31
+msgid "Allow/Prohibit editing selected Gravity Forms"
+msgstr "Bearbeitung ausgewählter Gravity Forms zulassen / verhindern"
+
+#: pro/includes/classes/gf-access-view.php:53
 msgid "Gravity Forms Restrictions"
 msgstr "Gravity Forms Beschr&auml;nkungen"
 
-#: pro/includes/classes/gf-access.php:100
-msgid "Allow access to forms with ID (comma separated) "
-msgstr ""
-"Ermöglichen Sie den Zugriff auf Formulare mit ID (durch Komma getrennt) "
+#: pro/includes/classes/gf-access-view.php:64
+#: pro/includes/classes/posts-edit-access-view.php:64
+msgid "What to do"
+msgstr "Was Sie tun können"
 
-#: pro/includes/classes/import-roles-csv.php:53
-#: pro/includes/classes/import-single-role.php:99
-msgid "Import Role"
-msgstr "Importiere Rolle"
+#: pro/includes/classes/gf-access-view.php:68
+#: pro/includes/classes/posts-edit-access-view.php:68
+msgid "Allow"
+msgstr "Erlauben"
 
-#: pro/includes/classes/import-roles-csv.php:54
-#: pro/includes/classes/import-single-role.php:100
-msgid "Importing to"
-msgstr "Importieren nach"
+#: pro/includes/classes/gf-access-view.php:70
+#: pro/includes/classes/posts-edit-access-view.php:70
+msgid "Prohibit"
+msgstr "Verbiete"
 
-#: pro/includes/classes/import-roles-csv.php:79
+#: pro/includes/classes/gf-access-view.php:75
+#: pro/includes/classes/posts-edit-access-view.php:75
+msgid "Look at roles"
+msgstr "Rollen ansehen"
+
+#: pro/includes/classes/gf-access-view.php:84
+msgid "with forms ID (comma separated)"
+msgstr "mit Formular-ID (durch Komma getrennt)"
+
+#: pro/includes/classes/import-roles-csv.php:38
 msgid "Import User Roles from CSV file"
 msgstr "Benutzerrollen aus CSV-Datei importieren"
 
-#: pro/includes/classes/import-roles-csv.php:99
+#: pro/includes/classes/import-roles-csv.php:44
+#, fuzzy
+#| msgid "Add New Role"
+msgid "Add new roles"
+msgstr "Neue Rolle hinzuf&uuml;gen"
+
+#: pro/includes/classes/import-roles-csv.php:46
+msgid "Overwrite existing roles"
+msgstr ""
+
+#: pro/includes/classes/import-roles-csv.php:48
+#, fuzzy
+#| msgid "Delete others pages"
+msgid "Delete not existing roles"
+msgstr "Seiten anderer l&ouml;schen"
+
+#: pro/includes/classes/import-roles-csv.php:52
 msgid "Import user roles from CSV"
 msgstr "Benutzerrollen aus CSV importieren"
+
+#: pro/includes/classes/import-roles-csv.php:79
+#: pro/includes/classes/import-single-role.php:306
+msgid "You do not have sufficient permissions to import roles."
+msgstr "Sie haben nicht die nötige Berechtigung, um Rollen zu importieren."
+
+#: pro/includes/classes/import-roles-csv.php:231
+#: pro/includes/classes/import-single-role.php:312
+msgid "File upload error."
+msgstr "Fehler beim Hochladen der Datei."
+
+#: pro/includes/classes/import-roles-csv.php:236
+#: pro/includes/classes/import-single-role.php:318
+msgid "File upload error. Can not write to"
+msgstr "Fehler beim Hochladen der Datei. Kann nicht schreiben auf"
+
+#: pro/includes/classes/import-roles-csv.php:251
+#, fuzzy
+#| msgid "Role was imported successfully"
+msgid "Roles are imported successfully"
+msgstr "Rolle wurde erfolgreich importiert"
 
 #: pro/includes/classes/import-roles-view.php:37
 msgid "Together with selected add-ons data:"
@@ -1530,6 +1619,14 @@ msgid ""
 msgstr ""
 "(Addon-Einstellungen werden importiert, falls das Addon in der importierten "
 "Datei angezeigt wird)"
+
+#: pro/includes/classes/import-single-role.php:99
+msgid "Import Role"
+msgstr "Importiere Rolle"
+
+#: pro/includes/classes/import-single-role.php:100
+msgid "Importing to"
+msgstr "Importieren nach"
 
 #: pro/includes/classes/import-single-role.php:101
 msgid "Select file with role data"
@@ -1551,18 +1648,6 @@ msgstr ""
 #: pro/includes/classes/import-single-role.php:194
 msgid "Import failure: Role ID was not found"
 msgstr "Import fehlgeschlagen: Rollen-ID wurde nicht gefunden"
-
-#: pro/includes/classes/import-single-role.php:306
-msgid "You do not have sufficient permissions to import roles."
-msgstr "Sie haben nicht die nötige Berechtigung, um Rollen zu importieren."
-
-#: pro/includes/classes/import-single-role.php:312
-msgid "File upload error."
-msgstr "Fehler beim Hochladen der Datei."
-
-#: pro/includes/classes/import-single-role.php:318
-msgid "File upload error. Can not write to"
-msgstr "Fehler beim Hochladen der Datei. Kann nicht schreiben auf"
 
 #: pro/includes/classes/import-single-role.php:327
 msgid "Import failure: Role file is broken or has invalid format - "
@@ -1724,19 +1809,19 @@ msgstr "ID"
 msgid "Delete from the list of available meta boxes"
 msgstr "Lösche aus der Liste der verfügbaren Meta-Boxen"
 
-#: pro/includes/classes/nav-menus-admin-controller.php:156
+#: pro/includes/classes/nav-menus-admin-controller.php:158
 msgid "URE: Nav Menus access: Wrong object type. Data was not updated."
 msgstr ""
 "URE: Zugriff auf Nav-Menüs: Falscher Objekttyp. Daten wurden nicht "
 "aktualisiert."
 
-#: pro/includes/classes/nav-menus-admin-controller.php:161
+#: pro/includes/classes/nav-menus-admin-controller.php:163
 msgid "URE: Nav Menus access: Empty object name. Data was not updated"
 msgstr ""
 "URE: Zugriff auf Nav-Menüs: Leerer Objektname. Daten wurden nicht "
 "aktualisiert"
 
-#: pro/includes/classes/nav-menus-admin-controller.php:172
+#: pro/includes/classes/nav-menus-admin-controller.php:174
 msgid "Nav. menus access: data was updated successfully"
 msgstr "Nav. Menüzugriff: Daten wurden erfolgreich aktualisiert"
 
@@ -1769,7 +1854,7 @@ msgid "Slug"
 msgstr "Slug"
 
 #: pro/includes/classes/nav-menus-admin-view.php:72
-#: pro/includes/classes/posts-view.php:116
+#: pro/includes/classes/posts-view.php:115
 #: pro/includes/classes/widgets-admin-view.php:69
 #: pro/includes/classes/widgets-admin-view.php:104
 msgid "Name"
@@ -1968,24 +2053,8 @@ msgstr "Erlaube/Verbiete Bearbeitung ausgewählter Beiträge"
 msgid "Posts/Pages/Custom Post Types Editor Restrictions"
 msgstr "Beiträge/Seiten/Custom Post Types Editor Einschränkungen"
 
-#: pro/includes/classes/posts-edit-access-view.php:64
-msgid "What to do"
-msgstr "Was Sie tun können"
-
-#: pro/includes/classes/posts-edit-access-view.php:68
-msgid "Allow"
-msgstr "Erlauben"
-
-#: pro/includes/classes/posts-edit-access-view.php:70
-msgid "Prohibit"
-msgstr "Verbiete"
-
-#: pro/includes/classes/posts-edit-access-view.php:75
-msgid "Look at roles"
-msgstr "Rollen ansehen"
-
 #: pro/includes/classes/posts-edit-access-view.php:83
-#: pro/includes/classes/posts-view.php:194
+#: pro/includes/classes/posts-view.php:193
 msgid "Own data only"
 msgstr "Nur eigene Daten"
 
@@ -2001,7 +2070,7 @@ msgstr "mit Kategorie/Taxonomie-ID (durch Komma getrennt)"
 msgid "with author user ID (comma separated)"
 msgstr "bearbeite Beiträge/Seiten mit Autoren-ID (Kommatagetrennt)"
 
-#: pro/includes/classes/posts-edit-access.php:246
+#: pro/includes/classes/posts-edit-access.php:251
 #, php-format
 msgctxt "posts"
 msgid "Mine <span class=\"count\">(%s)</span>"
@@ -2040,27 +2109,27 @@ msgstr ""
 "Benutzerrolleneditor: Zugang Beitragsansicht: Daten wurden erfolgreich "
 "akualisiert"
 
-#: pro/includes/classes/posts-view.php:53
+#: pro/includes/classes/posts-view.php:52
 msgid "ID"
 msgstr "ID"
 
-#: pro/includes/classes/posts-view.php:112
+#: pro/includes/classes/posts-view.php:111
 msgid "Page templates:"
 msgstr "Seitenvorlagen:"
 
-#: pro/includes/classes/posts-view.php:117
+#: pro/includes/classes/posts-view.php:116
 msgid "File"
 msgstr "Datei"
 
-#: pro/includes/classes/posts-view.php:176
+#: pro/includes/classes/posts-view.php:175
 msgid "Block:"
 msgstr "Abweisen:"
 
-#: pro/includes/classes/posts-view.php:187
+#: pro/includes/classes/posts-view.php:186
 msgid "Posts ID list (comma separated)"
 msgstr "Beitrags-ID-Liste (durch Komma getrennt)"
 
-#: pro/includes/classes/posts-view.php:191
+#: pro/includes/classes/posts-view.php:190
 msgid "Authors ID list (comma separated)"
 msgstr "Liste der Autoren-IDs (durch Komma getrennt)"
 
@@ -2231,7 +2300,7 @@ msgstr ""
 "Erlaubnis für die jeweiligen Beiträge / Seiten-ID´s. Das war's."
 
 #: pro/includes/classes/screen-help-pro.php:72
-#: pro/includes/settings-template2.php:148
+#: pro/includes/settings-template2.php:142
 msgid "Force custom post types to use their own capabilities"
 msgstr ""
 "Ermöglicht benutzerdefinierte Post-Typen, ihre eigenen Fähigkeiten zu "
@@ -2253,7 +2322,7 @@ msgstr ""
 "\"edit_videos\", \"delete_videos\", etc. verwendet."
 
 #: pro/includes/classes/screen-help-pro.php:78
-#: pro/includes/settings-template2.php:159
+#: pro/includes/settings-template2.php:153
 msgid "Activate per form user access management for Gravity Forms"
 msgstr ""
 "Aktivieren Sie per Formular Benutzerzugriffsverwaltung für Gravity Forms"
@@ -2304,7 +2373,7 @@ msgstr ""
 "Nutzer als normaler Inhalt sichtbar."
 
 #: pro/includes/classes/screen-help-pro.php:93
-#: pro/includes/settings-template2.php:184
+#: pro/includes/settings-template2.php:178
 msgid "Activate content view restrictions"
 msgstr "Einschränkungen Inhaltsansicht aktivieren"
 
@@ -2438,7 +2507,13 @@ msgid "Extract"
 msgstr "Extrahieren"
 
 #: pro/includes/classes/user-role-editor-pro.php:246
-msgid "Input allowed aguments before try to save it."
+#, fuzzy
+#| msgid "Select file with roles: "
+msgid "Select file with roles"
+msgstr "Wählen Sie eine Datei mit Rollen: "
+
+#: pro/includes/classes/user-role-editor-pro.php:248
+msgid "Input allowed arguments before try to save it."
 msgstr ""
 "Geben Sie zulässige Argumente ein, bevor Sie versuchen, sie zu speichern."
 
@@ -2671,17 +2746,23 @@ msgstr "Aktivieren Sie den Berechtigungsbetrachter der wp-admin pages"
 msgid "Activate export user roles to CSV"
 msgstr "Aktivieren Sie den Export von Benutzerrollen nach CSV"
 
-#: pro/includes/settings-template2.php:124
+#: pro/includes/settings-template2.php:112
+#, fuzzy
+#| msgid "Activate export user roles to CSV"
+msgid "Activate import user roles from CSV"
+msgstr "Aktivieren Sie den Export von Benutzerrollen nach CSV"
+
+#: pro/includes/settings-template2.php:118
 msgid "Content editing restrictions"
 msgstr "Einschränkungen Inhaltsbearbeitung"
 
-#: pro/includes/settings-template2.php:130
+#: pro/includes/settings-template2.php:124
 msgid "Activate \"Create\" capability for posts/pages/custom post types"
 msgstr ""
 "Aktivieren Sie \"Erstellen\" Fähigkeit für Beiträge / Seiten / "
 "benutzerdefinierte Beitragstypen"
 
-#: pro/includes/settings-template2.php:139
+#: pro/includes/settings-template2.php:133
 msgid ""
 "Activate user access management to editing selected posts, pages, custom "
 "post types"
@@ -2689,35 +2770,35 @@ msgstr ""
 "Aktivieren Sie Benutzerzugriffsverwaltung zum Bearbeiten ausgewählter "
 "Beiträge, Seiten, benutzerdefinierte Beitragstypen"
 
-#: pro/includes/settings-template2.php:169
+#: pro/includes/settings-template2.php:163
 msgid "Content view restrictions"
 msgstr "Einschr&auml;nkungen Inhaltsansicht"
 
-#: pro/includes/settings-template2.php:175
+#: pro/includes/settings-template2.php:169
 msgid "Activate [user_role_editor roles=\"role1, role2, ...\"] shortcode"
 msgstr "Aktiviere [user_role_editor roles=\"role1, role2, ...\"] shortcode"
 
-#: pro/includes/settings-template2.php:191
+#: pro/includes/settings-template2.php:185
 msgid "Show Defaults..."
 msgstr "Zeige Standards..."
 
-#: pro/includes/settings-template2.php:191
+#: pro/includes/settings-template2.php:185
 msgid "Hide Defaults..."
 msgstr "Verberge Standards..."
 
-#: pro/includes/settings-template2.php:199
+#: pro/includes/settings-template2.php:193
 msgid "Use additional user capabilities"
 msgstr "Verwenden Sie zusätzliche Benutzerfunktionen"
 
-#: pro/includes/settings-template2.php:205
+#: pro/includes/settings-template2.php:199
 msgid "Plugins related"
 msgstr "Plugins verwandt"
 
-#: pro/includes/settings-template2.php:214
+#: pro/includes/settings-template2.php:208
 msgid "Languages related"
 msgstr "Sprachen verwandt"
 
-#: pro/includes/settings-template2.php:223
+#: pro/includes/settings-template2.php:217
 msgid "Privacy related"
 msgstr "Datenschutz bezogen"
 
@@ -2729,6 +2810,10 @@ msgstr "Datenschutz bezogen"
 
 #~ msgid "Vladimir Garagulia"
 #~ msgstr "Vladimir Garagulia"
+
+#~ msgid "Allow access to forms with ID (comma separated) "
+#~ msgstr ""
+#~ "Ermöglichen Sie den Zugriff auf Formulare mit ID (durch Komma getrennt) "
 
 #~ msgid "Empty or not valid list of roles for deletion"
 #~ msgstr "Leere oder ungültige Liste der zu löschenden Rollen"
@@ -2750,9 +2835,6 @@ msgstr "Datenschutz bezogen"
 
 #~ msgid "Error is occur. Please check the log file."
 #~ msgstr "Fehler festgestellt. Bitte Log-Datei prüfen."
-
-#~ msgid "Select file with roles: "
-#~ msgstr "Wählen Sie eine Datei mit Rollen: "
 
 #~ msgid "Import failure: Wrong role "
 #~ msgstr "Import fehlgeschlagen: Falsche Rolle "

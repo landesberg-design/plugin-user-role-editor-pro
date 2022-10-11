@@ -131,7 +131,7 @@ class URE_Other_Roles {
             if (!isset($wp_roles->role_names[$key])) {
                 continue;
             }
-            $access_data['data'][] = filter_var($key, FILTER_SANITIZE_STRING);
+            $access_data['data'][] = URE_Base_Lib::filter_string_var( $key );
         }
         
         return $access_data;
@@ -165,7 +165,7 @@ class URE_Other_Roles {
     protected function get_allowed_roles($user) {
         $allowed_roles = array();
         if (empty($user)) {   // request for Role Editor - work with currently selected role
-            $current_role = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING);
+            $current_role = $this->lib->get_request_var('current_role', 'post');
             $allowed_roles[] = $current_role;
         } else {    // request from user capabilities editor - work with that user roles
             $allowed_roles = $user->roles;

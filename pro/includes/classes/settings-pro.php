@@ -50,9 +50,9 @@ class URE_Settings_Pro {
             $lib->put_option('post_access_error_message', $content_view_access_error_message);
         }
 								
-								// Redirect to URL																
-								$content_view_access_error_url = filter_input(INPUT_POST, 'content_view_access_error_url', FILTER_SANITIZE_URL);
-								$lib->put_option('content_view_access_error_url', $content_view_access_error_url);
+        // Redirect to URL																
+        $content_view_access_error_url = filter_input(INPUT_POST, 'content_view_access_error_url', FILTER_SANITIZE_URL);
+        $lib->put_option('content_view_access_error_url', $content_view_access_error_url);
 								        
     }
     // end of update_content_view_defaults()

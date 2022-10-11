@@ -2,8 +2,8 @@
 Contributors: Vladimir Garagulya (https://www.role-editor.com)
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
-Tested up to: 5.9
-Stable tag: 4.61
+Tested up to: 6.0.1
+Stable tag: 4.63
 Requires PHP: 7.3
 License URI: https://www.role-editor.com/end-user-license-agreement/
 
@@ -39,30 +39,19 @@ Right decision in this case is to delete free version folder (user-role-editor) 
 
 == Changelog ==
 
-= [4.61] 26.01.2022 =
-* Core version: 4.61.1
-* Update: Marked as compatible with WordPress 5.9.
-* Update: PHP 7.3 is marked as required.
-* New: Gravity Forms Edit Access add-on: It's possible to set what forms is allowed to edit for the selected role.
-* New: Content view restrictions add-on: [user_role_editor] shortcode "roles" and "except_roles" attributes supports the "no_role" value for logged-in users with "No role for this site" - without any role granted.
-* Fix: Content view restrictions add-on: PHP Warning:  A non-numeric value encountered in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/posts-view.php on line 224
-* Fix: Meta boxes access add-on:  PHP Warning:  A non-numeric value encountered in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/meta-boxes.php on line 452
-* Core version was updated to version 4.61.1
-* Update: If installed PHP/WordPress version is lower than required one, script termination ( wp_die() ) was replaced with notice-warning admin notice output.
-* Update: "Settings->User Role Editor->Tools->Reset" button is additionally protected from the unintended/accidental usage by text input field. Manual input of "Permanently delete all custom user roles and capabilities" text is required to enable the "Reset" button.
-* Update: Partial code review and refactoring according with WordPress & PHP coding standards.
-* Fix: "Users->selected user->Capabilities" page: 'select all' checkbox did not work.
+= [4.63] 03.08.2022 =
+* Core version: 4.63
+* Update: Marked as compatible with WordPress 6.0.1
+* New: Edit restrictions access add-on: It's possible allow/prohibit for role or user the selected post types: posts, pages, custom post types. 
+* Fix: Content view restrictions add-on: Fatal error: Uncaught InvalidArgumentException: target should be an object with map method or an array in /wp-content/plugins/sitepress-multilingual-cms/vendor/wpml/fp/core/Fns.php:156
+  URE tried to check if not logged-in user can edit the post, by its ID. This leaded to a problem inside WPML plugin code. 
+* Fix: Content edit restrictions:  "Force custom post types to use their own capabilities" option: URE automatically created custom post types unique capabilities later then "Fusion Builder" plugin did. 'init' action was replaced with 'wp_loaded' one.
+* Update: Content view restrictions add-on: restrictions are applied to the public custom post types only.
+* Update: Few notices (e.g. "Constant FILTER_SANITIZE_STRING is deprecated") was fixed for better compatibility with PHP 8.1.
+* Core version was updated to version 4.63
+* New: It's possible to translate custom role names using [PolyLang](https://wordpress.org/plugins/polylang/) plugin.
+* Update: URE does not sort roles in WordPress dropdown lists. In order to sort roles by name return 'name' from 'ure_sort_wp_roles_list' filter.
+* Update: User capabilities view page minor CSS enhancements.
 
-= [4.60.2] 21.09.2021 =
-* Core version: 4.60.2
-* Update: Marked as compatible with WordPress 5.8.1
-* Fix: Admin menu access add-on: Blocked admin menu item "SEO->Workouts" (from Yoast SEO plugin) was still available as main menu item.
-* Fix: Multisite: Add-ons data from the main site were not replicated to subsites after click "Update Network" button from the "Network Admin->Users->User Role Editor".
-* Fix: Navigation menus access add-on:
-* - PHP Warning: Undefined variable $result in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/nav-menus-admin-controller.php on line 28
-* - PHP Fatal error: Uncaught TypeError: Unsupported operand types: string + string in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/nav-menus-admin-view.php:146 
-* Core version was updated to version 4.60.2
-* New: URE user capability 'ure_edit_gravityforms_access' was added (for future use).
-* Fix: Multisite: URE_Editor::is_full_network_sync() returned FALSE, instead TRUE for the AJAX call, while call was made from the Network Admin (wp-admin/network/).
 
 Full list of changes is available in changelog.txt file.

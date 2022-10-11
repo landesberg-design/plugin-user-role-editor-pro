@@ -80,12 +80,12 @@ class URE_Posts_View_Access {
             $editor->set_notification( esc_html__('URE: you have not enough permissions to use this add-on.', 'user-role-editor') );
             return;
         }
-        $ure_object_type = filter_input(INPUT_POST, 'ure_object_type', FILTER_SANITIZE_STRING);
+        $ure_object_type = $this->lib->get_request_var('ure_object_type', 'post');
         if ($ure_object_type!=='role' && $ure_object_type!=='user') {
             $editor->set_notification( esc_html__('URE: posts view access: Wrong object type. Data was not updated.', 'user-role-editor') );
             return;
         }
-        $ure_object_name = filter_input(INPUT_POST, 'ure_object_name', FILTER_SANITIZE_STRING);
+        $ure_object_name = $this->lib->get_request_var('ure_object_name', 'post');
         if (empty($ure_object_name)) {
             $editor->set_notification( esc_html__('URE: posts view access: Empty object name. Data was not updated', 'user-role-editor') );
             return;

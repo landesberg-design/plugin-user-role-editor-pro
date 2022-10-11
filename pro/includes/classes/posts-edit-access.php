@@ -89,23 +89,67 @@ class URE_Posts_Edit_Access {
     }
     // end of set_hooks_front_end()
     
-            
-    public function recount_wp_posts($counts, $type, $perm) {
+    
+    
+    // Check if post_type apparently restricted 
+    private function is_post_type_restricted( $post_type ) {
+        
+        $restriction_type = $this->user->get_restriction_type();
+        $post_types = $this->user->get_post_types();                
+        $pt_in = in_array( $post_type, $post_types );       
+        $posts_list = $this->user->get_posts_list( $post_type );
+        
+        if ( $restriction_type==1 ) {   // Allow               
+            if ( !empty( $posts_list ) ) {
+                // There is restriction by selected posts 
+                return true;
+            }
+            if ( $pt_in ) {
+                // A whole post type is directly allowed
+                return false;   
+            } else {
+                // A whole post type is not directly allowed
+                return true;
+            }            
+        } else {    // $restriction_type==2 - Prohibit
+            if ( $pt_in ) {
+                // Post type is directly prohibited
+                return true;    
+            }
+            if ( !empty( $posts_list ) ) { 
+                 // There is restriction by selected posts
+                return true;
+            }
+            if ( !$pt_in ) {
+                // Post type is not directly prohibited
+                return false;    
+            }
+        }        
+        
+        return false;
+    }
+    // end of is_post_type_restricted()
+    
+    
+    public function recount_wp_posts( $counts, $type, $perm ) {
         global $wpdb;
 
-        if (!post_type_exists($type)) {
+        if ( !post_type_exists( $type ) ) {
             return new stdClass;
         }        
-        if (!$this->should_apply_restrictions_to_wp_page()) {
+        if ( !$this->should_apply_restrictions_to_wp_page() ) {
             return $counts;
         }                                
         // do not limit user with Administrator role or the user for whome posts/pages edit restrictions were not set
-        if (!$this->user->is_restriction_applicable()) {
+        if ( !$this->user->is_restriction_applicable() ) {
             return $counts;
         }    
         
-        $restrict_it = apply_filters('ure_restrict_edit_post_type', $type);
-        if (empty($restrict_it)) {
+        $restrict_it = $this->is_post_type_restricted( $type );
+        if ( $restrict_it ) {
+            $restrict_it = apply_filters('ure_restrict_edit_post_type', $type );
+        }
+        if ( empty( $restrict_it ) ) {
             return $counts;
         }
 
@@ -124,31 +168,30 @@ class URE_Posts_Edit_Access {
         }
         $restriction_type = $this->user->get_restriction_type();
         $posts_list = $this->user->get_posts_list( $type );
-        if ($restriction_type==1) {   // Allow
-            if (count($posts_list)==0) {
-                $query = false;
-            } else {
+        if ( count( $posts_list )==0 ) {
+            $query = false;
+        } else {    
+            if ( $restriction_type==1 ) {   // Allow
                 $posts_list_str = URE_Base_Lib::esc_sql_in_list('int', $posts_list);
                 $query .= " AND ID IN ($posts_list_str)";
-            }
-        } elseif ($restriction_type==2) {    // Prohibit
-            if (count($posts_list)>0) {
+            } elseif ( $restriction_type==2 ) {    // Prohibit
                 $posts_list_str = URE_Base_Lib::esc_sql_in_list('int', $posts_list);
                 $query .= " AND ID NOT IN ($posts_list_str)";
-            }
-        }                
+            }                
+        }
         if (!empty($query)) {
             $query .= ' GROUP BY post_status';
             $results = (array) $wpdb->get_results($wpdb->prepare($query, $type), ARRAY_A);
         } else {
             $results = array();
         }
-        $counts = array_fill_keys(get_post_stati(), 0);
+        
+        $counts = array_fill_keys( get_post_stati(), 0 );
         foreach ($results as $row) {
             $counts[$row['post_status']] = $row['num_posts'];
         }
         $counts = (object) $counts;
-        wp_cache_set($cache_key, $counts, 'counts');
+        wp_cache_set( $cache_key, $counts, 'counts');
 
         return $counts;
     }
@@ -323,9 +366,12 @@ class URE_Posts_Edit_Access {
         }                                
                         
         remove_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4);  // do not allow endless recursion
-        $restrict_it = apply_filters('ure_restrict_edit_post_type', $post->post_type);
+        $restrict_it = $this->is_post_type_restricted( $post->post_type );
+        if ( $restrict_it ) {
+            $restrict_it = apply_filters('ure_restrict_edit_post_type', $post->post_type );
+        }
         add_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4);     // restore filter
-        if (empty($restrict_it)) {            
+        if ( empty( $restrict_it ) ) {            
             return $caps;
         }        
         
@@ -357,19 +403,18 @@ class URE_Posts_Edit_Access {
     private function update_post_query( $query ) {
         
         $restriction_type = $this->user->get_restriction_type();
-        $posts_list = $this->user->get_posts_list( $query->query['post_type'] );
-        
-        if ($restriction_type==1) {   // Allow
-            if (count($posts_list)==0) {
+        $post_type = $query->query['post_type'];
+        $posts_list = $this->user->get_posts_list( $post_type );
+        if ( count( $posts_list )==0 ) {
                 $query->set('p', -1);   // return empty list
-            } else {
+        } else {
+            if ( $restriction_type==1 ) {   // Allow
                 $query->set('post__in', $posts_list);
-            }
-        } elseif ($restriction_type==2) {    // Prohibit
-            if (count($posts_list)>0) {
+            } elseif ( $restriction_type==2 ) {    // Prohibit
                 $query->set('post__not_in', $posts_list);
             }
         }
+        
     }
     // end of update_post_query()
     
@@ -437,7 +482,12 @@ class URE_Posts_Edit_Access {
                 $this->leave_just_allowed( $query, $attachments_list );
             }
         } else {    // Prohibit
-            $query->set('post__not_in', $attachments_list );
+            if ( count( $attachments_list )>0 ) {
+                $query->set('post__not_in', $attachments_list );
+            } else {
+                $attachments_list[] = -1;
+                $query->set('post__in', $attachments_list );
+            }
         }
         
     }
@@ -456,12 +506,15 @@ class URE_Posts_Edit_Access {
         }
 
         $suppressing_filters = $query->get('suppress_filters'); // Filter suppression on?
-        if ($suppressing_filters) {
+        if ( $suppressing_filters ) {
             return;
         }                   
         
         if ( !empty( $query->query['post_type'] ) ) {
-            $restrict_it = apply_filters('ure_restrict_edit_post_type', $query->query['post_type'] );
+            $restrict_it = $this->is_post_type_restricted( $query->query['post_type'] );
+            if ( $restrict_it ) {
+                $restrict_it = apply_filters('ure_restrict_edit_post_type', $query->query['post_type'] );
+            }
             if ( empty( $restrict_it ) ) {
                 return;
             } 
@@ -494,26 +547,28 @@ class URE_Posts_Edit_Access {
     // end of restrict_posts_list()
 
             
-    public function restrict_pages_list($pages) {
+    public function restrict_pages_list( $pages ) {
                 
-        if (!$this->should_apply_restrictions_to_wp_page()) {
+        if ( !$this->should_apply_restrictions_to_wp_page() ) {
             return $pages;
         }                        
         
         // do not limit user with Administrator role
-        if (!$this->user->is_restriction_applicable()) {
+        if ( !$this->user->is_restriction_applicable() ) {
             return $pages;
         }
-        
-        $restrict_it = apply_filters('ure_restrict_edit_post_type', 'page');
-        if (empty($restrict_it)) {
+        $restrict_it = $this->is_post_type_restricted('page');
+        if ( $restrict_it ) {
+            $restrict_it = apply_filters('ure_restrict_edit_post_type', 'page');
+        }
+        if ( empty( $restrict_it ) ) {
             return $pages;
         }
         
         $restriction_type = $this->user->get_restriction_type();
         $posts_list = $this->user->get_posts_list( 'page' );
         if ( count( $posts_list )==0 ) {    // Allow
-            if ($restriction_type==1) {
+            if ( $restriction_type==1 ) {
                 return array(); // There is no available pages
             } else {    // Prohibit
                 return $pages;  //  All pages are available
@@ -522,13 +577,13 @@ class URE_Posts_Edit_Access {
         }                 
         
         $pages1 = array();
-        foreach($pages as $page) {
-            if ($restriction_type==1) { // Allow: not edit others
-                if (in_array($page->ID, $posts_list)) {    // not edit others
+        foreach( $pages as $page ) {
+            if ( $restriction_type==1 ) { // Allow: not edit others
+                if ( in_array($page->ID, $posts_list ) ) {    // not edit others
                     $pages1[] = $page;                    
                 }
             } else {    // Prohibit: Not edit these
-                if (!in_array($page->ID, $posts_list)) {    // not edit these
+                if ( !in_array($page->ID, $posts_list ) ) {    // not edit these
                     $pages1[] = $page;                    
                 }                
             }
@@ -626,8 +681,11 @@ class URE_Posts_Edit_Access {
                 return $exclusions;
             }
         }
-        
-        $restrict_it = apply_filters('ure_restrict_edit_post_type', $post_type);
+
+        $restrict_it = $this->is_post_type_restricted( $post_type );
+        if ( $restrict_it ) {
+            $restrict_it = apply_filters('ure_restrict_edit_post_type', $post_type);
+        }
         if ( empty( $restrict_it ) ) {
             return $exclusions;
         }

@@ -37,7 +37,7 @@ class URE_Admin_Menu_View {
         wp_localize_script('ure-admin-menu-access', 'ure_data_admin_menu_access', 
                 array(
                     'admin_menu' => esc_html__('Admin Menu', 'user-role-editor'),
-                    'dialog_title' => esc_html__('Admin menu', 'user-role-editor'),
+                    'dialog_title' => esc_html__('Admin Menu', 'user-role-editor'),
                     'update_button' => esc_html__('Update', 'user-role-editor')
                 ));
         
@@ -308,7 +308,7 @@ class URE_Admin_Menu_View {
             <table>
                 <tr>
                     <td>
-                        <?php esc_html_e('Base URL', 'user_role_editor'); ?>:
+                        <?php esc_html_e('Base URL', 'user-role-editor'); ?>:
                     </td>
                     <td id="base_url_label">
                         
@@ -316,8 +316,8 @@ class URE_Admin_Menu_View {
                 </tr>
                 <tr>
                     <td>
-                        <?php esc_html_e('Allowed arguments', 'user_role_editor'); ?><br>
-                        <?php esc_html_e('(comma separated)', 'user_role_editor'); ?>:
+                        <?php esc_html_e('Allowed arguments', 'user-role-editor'); ?><br>
+                        <?php esc_html_e('(comma separated)', 'user-role-editor'); ?>:
                     </td>
                     <td>
                         <textarea id="allowed_args" name="allowed_args" rows="3" style="width: 600px;"></textarea>
@@ -325,7 +325,7 @@ class URE_Admin_Menu_View {
                 </tr>
                 <tr>
                     <td>
-                        <?php esc_html_e('Extract from URL', 'user_role_editor'); ?>:
+                        <?php esc_html_e('Extract from URL', 'user-role-editor'); ?>:
                     </td>
                     <td>
                         <input type="text" id="url_to_parse" name="url_to_parse" value="" style="width: 600px;">
@@ -333,8 +333,8 @@ class URE_Admin_Menu_View {
                 </tr>    
             </table>
             <div style="text-align: right; padding-right: 5px;">
-                <button id="extract_args_button" name="extract_args_button">Extract</button>
-                <button id="update_allowed_args_button" name="update_allowed_args_button">Update</button>
+                <button id="extract_args_button" name="extract_args_button"><?php esc_html_e('Extract', 'user-role-editor');?></button>
+                <button id="update_allowed_args_button" name="update_allowed_args_button"><?php esc_html_e('Update', 'user-role-editor');?></button>
             </div>
         </div>    
   <?php        

@@ -271,8 +271,12 @@ class URE_Lib_Pro extends URE_Lib {
     public function extract_command_from_url( $url, $with_query=true ) {
         
         $path = parse_url( $url, PHP_URL_PATH );
-        $path_parts = explode( '/', $path );
-        $url_script = end( $path_parts );
+        if ( !empty( $path ) ) {
+            $path_parts = explode( '/', $path );
+            $url_script = end( $path_parts );
+        } else {
+            $url_script = $url;
+        }
         $url_query = parse_url( $url, PHP_URL_QUERY );
         
         $command = $url_script;

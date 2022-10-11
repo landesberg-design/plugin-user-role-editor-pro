@@ -136,8 +136,9 @@ class URE_Content_View_Restrictions_Editor {
             return false;
         }
 
+        $lib = URE_Lib_Pro::get_instance();
         // Verify that the nonce is valid.
-        $nonce = filter_input( INPUT_POST, 'ure_content_view_restrictions_box_nonce', FILTER_SANITIZE_STRING );
+        $nonce = $lib->get_request_var( 'ure_content_view_restrictions_box_nonce', 'post' );
         if ( empty( $nonce ) || !wp_verify_nonce( $nonce, 'ure_content_view_restrictions_box' ) ) {
             return false;
         }

@@ -22,7 +22,8 @@ class URE_Posts_View {
     protected function get_allowed_roles( $user ) {
         $allowed_roles = array();
         if ( empty( $user ) ) {   // request for Role Editor - work with currently selected role
-            $current_role = filter_input( INPUT_POST, 'current_role', FILTER_SANITIZE_STRING );
+            $lib = URE_Lib_Pro::get_instance();
+            $current_role = $lib->get_request_var('current_role', 'POST' );
             $allowed_roles[] = $current_role;
         } else {    // request from user capabilities editor - work with that user roles
             $allowed_roles = $user->roles;

@@ -16,7 +16,7 @@ class URE_Create_Posts_Cap {
     public function __construct() {        
         
         $this->lib = URE_Lib_Pro::get_instance();
-        add_action('init', array($this, 'activate'), 99, 2);    // execute after URE_Post_Own_Caps
+        add_action('wp_loaded', array($this, 'activate'), 99, 2);    // execute after URE_Post_Own_Caps
         add_filter('ure_built_in_wp_caps', array($this, 'add_to_caps_groups'), 10, 1);
     }
     // end of __construct()
@@ -26,17 +26,17 @@ class URE_Create_Posts_Cap {
      * Prevent 'insufficient permissions' message from 'edit.php?post_type=custom' link 
      * in case 'create_posts' capability is active, but user does not have 'edit_posts' capability
      */    
-    public function allow_edit_post_type($menu_order) {
+    public function allow_edit_post_type( $menu_order ) {
         global $_wp_menu_nopriv;
         global $_wp_submenu_nopriv;
         global $pagenow;
                 
-        if ($pagenow!=='edit.php') {
+        if ( $pagenow!=='edit.php' ) {
             return $menu_order;
         }
         
-        $post_type_name = filter_input(INPUT_GET, 'post_type', FILTER_SANITIZE_STRING);
-        if (empty($post_type_name)) {
+        $post_type_name = $this->lib->get_request_var('post_type', 'get');
+        if ( empty( $post_type_name ) ) {
             return $menu_order;
         }
         

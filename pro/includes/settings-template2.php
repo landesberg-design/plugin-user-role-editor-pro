@@ -17,7 +17,7 @@ $admin_menu_access_url_args_link_display = $activate_admin_menu_access_module==1
             <?php checked($activate_admin_menu_access_module, 1); ?> onclick="ure_admin_menu_access_url_args.toggle_link();"/> 
             <label for="activate_admin_menu_access_module"><?php esc_html_e('Activate Administrator Menu Access module', 'user-role-editor'); ?></label>
             <div id="admin_menu_access_url_args_link" style="display: <?php echo $admin_menu_access_url_args_link_display; ?>; padding-left: 25px;">
-                <a href="javascript: void(0);" onclick="ure_admin_menu_access_url_args.show();">URL Parameters White List...</a>
+                <a href="javascript: void(0);" onclick="ure_admin_menu_access_url_args.show();"><?php esc_html_e('URL Parameters White List...', 'user-role-editor'); ?></a>
             </div>
             <div id="admin_menu_allowed_args_dialog"><div id="admin_menu_allowed_args_container"></div></div>
         </td>
@@ -105,8 +105,6 @@ $admin_menu_access_url_args_link_display = $activate_admin_menu_access_module==1
         <td>
         </td>
       </tr>
-<?php
-/*
       <tr>
         <td>
             <input type="checkbox" name="activate_import_roles_csv" id="activate_import_roles_csv" value="1" 
@@ -116,9 +114,6 @@ $admin_menu_access_url_args_link_display = $activate_admin_menu_access_module==1
         <td>
         </td>
       </tr>
- * 
- */
-?>      
       <tr>
           <td cospan="2"><h3><?php esc_html_e('Content editing restrictions', 'user-role-editor');?></h3></td>
       </tr>

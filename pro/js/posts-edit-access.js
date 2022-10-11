@@ -62,7 +62,7 @@ function ure_posts_edit_access_dialog(data) {
             autoOpen: true, 
             closeOnEscape: true,      
             width: 680,
-            height: 470,
+            height: 580,
             resizable: false,
             title: ure_data_posts_edit_access.dialog_title +' ('+ ure_current_role +')',
             'buttons'       : {

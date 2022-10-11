@@ -209,7 +209,7 @@ class URE_Content_View_Restrictions_Controller {
             if (in_array($key, $keys_to_skip)) {
                 continue;
             }
-            $value = filter_var($key, FILTER_SANITIZE_STRING);
+            $value = URE_Base_Lib::filter_string_var( $key );
             $values = explode('_', $value);
             if ($values[0]!=='cat') {
                 continue;
@@ -258,7 +258,7 @@ class URE_Content_View_Restrictions_Controller {
             if (in_array($key, $keys_to_skip)) {
                 continue;
             }
-            $value = filter_var($key, FILTER_SANITIZE_STRING);
+            $value = URE_Base_Lib::filter_string_var( $key );
             $values = explode('_', $value);
             if ($values[0]!=='templ') {
                 continue;
@@ -277,7 +277,8 @@ class URE_Content_View_Restrictions_Controller {
 
     static private function get_posts() {
         $posts = array();
-        $posts_list_str = filter_input(INPUT_POST, 'ure_posts_list', FILTER_SANITIZE_STRING);
+        $lib = URE_Lib_Pro::get_instance();
+        $posts_list_str = $lib->get_request_var('ure_posts_list', 'post');
         if (!empty($posts_list_str)) {
             $posts = URE_Utils::filter_int_array_from_str($posts_list_str);
         }
@@ -288,8 +289,9 @@ class URE_Content_View_Restrictions_Controller {
     
     
     static private function get_authors() {
+        $lib = URE_Lib_Pro::get_instance();
         $authors = array();
-        $authors_list_str = filter_input(INPUT_POST, 'ure_posts_authors_list', FILTER_SANITIZE_STRING);
+        $authors_list_str = $lib->get_request_var('ure_posts_authors_list', 'post');
         if (!empty($authors_list_str)) {
             $authors = URE_Utils::filter_int_array_from_str($authors_list_str);
         }

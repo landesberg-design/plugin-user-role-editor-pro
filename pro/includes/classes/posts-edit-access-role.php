@@ -65,7 +65,8 @@ class URE_Posts_Edit_Access_Role {
             return array('result'=>'error', 'message'=>'Not enough permissions');
         }
         
-        $role_id = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING);
+        $lib = URE_Lib_Pro::get_instance();
+        $role_id = $lib->get_request_var('current_role', 'post');
         $args = URE_Posts_Edit_Access_Role_Controller::prepare_form_data($role_id);                        
         $html = URE_Posts_Edit_Access_View::get_html($args);
         

@@ -168,7 +168,7 @@ class URE_Widgets_Admin_Controller {
     // end of get_access_model_from_post()
     
     
-    private function get_access_data_from_post() {
+    private static function get_access_data_from_post() {
         
         $access_model = self::get_access_model_from_post();
         $access_data = array(
@@ -224,7 +224,8 @@ class URE_Widgets_Admin_Controller {
     public static function get_allowed_roles($user) {
         $allowed_roles = array();
         if ( empty( $user ) ) {   // request for Role Editor - work with currently selected role
-            $current_role = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING);
+            $lib = URE_Lib_Pro::get_instance();
+            $current_role = $lib->get_request_var('current_role', 'post');
             $allowed_roles[] = $current_role;
         } else {    // request from user capabilities editor - work with that user roles
             $allowed_roles = $user->roles;
@@ -311,13 +312,13 @@ class URE_Widgets_Admin_Controller {
             $answer['message'] = esc_html__('URE: Insufficient permissions to use this add-on','user-role-editor');
             return $answer;
         }
-                
-        $ure_object_type = ( isset( $_POST['values']['ure_object_type'] ) ) ? filter_var( $_POST['values']['ure_object_type'], FILTER_SANITIZE_STRING ) : false;
+        
+        $ure_object_type = ( isset( $_POST['values']['ure_object_type'] ) ) ? URE_Base_Lib::filter_string_var( $_POST['values']['ure_object_type'] ) : false;
         if ( $ure_object_type!=='role' && $ure_object_type!=='user') {
             $answer['message'] = esc_html__('URE: widgets access: Wrong object type. Data was not updated.', 'user-role-editor');
             return $answer;
         }
-        $ure_object_name = ( isset( $_POST['values']['ure_object_name'] ) ) ? filter_var( $_POST['values']['ure_object_name'], FILTER_SANITIZE_STRING ) : false;
+        $ure_object_name = ( isset( $_POST['values']['ure_object_name'] ) ) ? URE_Base_Lib::filter_string_var( $_POST['values']['ure_object_name'] ) : false;
         if ( empty( $ure_object_name ) ) {
             $answer['message'] = esc_html__('URE: widgets access: Empty object name. Data was not updated', 'user-role-editor');
             return;

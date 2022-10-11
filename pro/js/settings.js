@@ -60,25 +60,20 @@ jQuery(function() {
         label: ure_settings_data_pro.export_button
     }).on('click', (function (event) {
         event.preventDefault();
-        jQuery('#ure_export_roles_csv_form').trigger('submit');
+        jQuery('#ure_export_roles_csv_form').submit();
     }));
 
     jQuery("#ure_import_roles_csv_button").button({
-        label: ure_data.import_roles
+        label: ure_settings_data_pro.import_roles
     }).on('click', (function(event) {
         event.preventDefault();
         var file_name = jQuery('#roles_file').val();
         if (file_name == '') {
-            alert(ure_data.select_file_with_roles);
+            alert(ure_settings_data_pro.select_file_with_roles);
             return false;
         }                    
-        var form = jQuery('#ure_import_roles_csv_form');
-        form.attr('action', ure_data.page_url);
-        jQuery("<input type='hidden'>")
-                .attr("name", 'ure_nonce')
-                .attr("value", ure_data.wp_nonce)
-                .appendTo(form);
-        form.submit();
+        jQuery('#ure_import_roles_csv_form').submit();
+        
     }));
     
 });

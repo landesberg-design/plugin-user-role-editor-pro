@@ -1,5 +1,35 @@
 User Role Editor Pro CHANGES LOG (full version).
 ================================================
+= [4.63] 12.07.2022 =
+* Core version: 4.63
+* Update: Marked as compatible with WordPress 6.1
+* New: Edit restrictions access add-on: It's possible allow/prohibit for role or user the selected post types: posts, pages, custom post types. 
+* Fix: Content view restrictions add-on: Fatal error: Uncaught InvalidArgumentException: target should be an object with map method or an array in /wp-content/plugins/sitepress-multilingual-cms/vendor/wpml/fp/core/Fns.php:156
+  URE tried to check if not logged-in user can edit the post, by its ID. This leaded to a problem inside WPML plugin code. 
+* Fix: Content edit restrictions:  "Force custom post types to use their own capabilities" option: URE automatically created custom post types unique capabilities later then "Fusion Builder" plugin did. 'init' action was replaced with 'wp_loaded' one.
+* Update: Content view restrictions add-on: restrictions are applied to the public custom post types only.
+* Update: Few notices (e.g. "Constant FILTER_SANITIZE_STRING is deprecated") was fixed for better compatibility with PHP 8.1.
+* Core version was updated to version 4.63
+* New: It's possible to translate custom role names using [PolyLang](https://wordpress.org/plugins/polylang/) plugin.
+* Update: URE does not sort roles in WordPress dropdown lists. In order to sort roles by name return 'name' from 'ure_sort_wp_roles_list' filter.
+* Update: User capabilities view page minor CSS enhancements.
+
+= [4.62.1] 29.03.2022 =
+* Core version: 4.61.2
+* Update: Marked as compatible with WordPress 5.9.2
+* Fix: Gravity Forms access add-on: 
+*   - Uncaught Error: Call to undefined method URE_GF_Access_User::get_fg_list() in /wp-content/plugins/user-role-editor-pro/pro/includes/classes/gf-access-user.php:211
+*   - All Gravity Forms were available for the user in spite of the restrictions set for him in some cases.
+*   - Button "Gravity Forms" did not work at "Users->User Role Editor" page. 
+
+= [4.62] 07.03.2022 =
+* Core version: 4.61.2
+* Update: Marked as compatible with WordPress 5.9.1
+* New: It's possible to import all user roles at once from previously exported CSV file.
+* New: "Edit posts restrictions" add-on: It's possible to replicate  settings from the main site to all other subsites of the multisite network (Network admin->Users->User Role Editor->Update Network).
+* Core version was updated to version 4.61.2
+* Fix: "Users->Add New" page - other selected roles were not saved.
+* Update: URE uses WordPress notification styles for own operation result output.
 
 = [4.61] 31.01.2022 =
 * Core version: 4.61.1

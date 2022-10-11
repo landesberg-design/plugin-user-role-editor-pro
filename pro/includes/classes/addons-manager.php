@@ -279,9 +279,6 @@ class URE_Addons_Manager {
 
     
     private function load_posts_edit() {
-        if (is_network_admin()) {
-            return;
-        }
         
         $activate = $this->lib->get_option('manage_posts_edit_access', false);
         if (!empty($activate)) {            

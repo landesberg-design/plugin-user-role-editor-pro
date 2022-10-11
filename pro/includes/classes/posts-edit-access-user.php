@@ -18,6 +18,7 @@ class URE_Posts_Edit_Access_User {
     private $attachments_list = null;       
     private $roles_data = null;
     private $restriction_type = null;
+    private $post_types = null;
     private $authors = null;
     private $terms = null;
     private $post_ids = null;
@@ -28,7 +29,7 @@ class URE_Posts_Edit_Access_User {
         
         $this->lib = URE_Lib_Pro::get_instance();  
         $this->pea = $pea;
-        $this->user_meta = new URE_Posts_Edit_Access_User_Meta();                
+        $this->user_meta = new URE_Posts_Edit_Access_User_Meta();                        
         
         add_action('edit_user_profile', array($this, 'show_profile'), 10, 2);
         add_action('profile_update', array($this, 'save_user_restrictions'), 10);                
@@ -41,13 +42,14 @@ class URE_Posts_Edit_Access_User {
     
     // Load edit restrictions data for current user
     public function load_restrictions_data() {
-        
+                
         $this->user_id = get_current_user_id();
-        if ( $this->user_id===null ) {
+        if ( empty( $this->user_id ) ) {
             return;
         }
         
         $this->load_restriction_type();
+        $this->load_post_types();
         $this->load_authors_list();
         $this->load_terms();
         $this->load_post_ids();
@@ -128,7 +130,9 @@ class URE_Posts_Edit_Access_User {
         if (empty($restriction_type)) {
             $restriction_type = 0;  // No restrictions ?!
         }
-        $own_data_only = $this->user_meta->get_own_data_only($user->ID);        
+        $own_data_only = $this->user_meta->get_own_data_only($user->ID);  
+        // by post type
+        $post_types = $this->user_meta->get_post_types( $user->ID );
         // by post ID
         $posts_list = $this->user_meta->get_posts_list($user->ID);        
         // be category/taxonomy
@@ -145,6 +149,7 @@ class URE_Posts_Edit_Access_User {
         $args = compact(array(
             'restriction_type', 
             'own_data_only',
+            'post_types',
             'posts_list', 
             'categories_list', 
             'post_authors_list',
@@ -209,7 +214,7 @@ class URE_Posts_Edit_Access_User {
     
     
     // save posts edit restrictions when user profile page is updated, as WordPress itself doesn't know about it
-    public function save_user_restrictions($user_id) {
+    public function save_user_restrictions( $user_id ) {
         
         if ( !isset( $_POST['ure_posts_list'] ) ) {
             // 'profile_update' action was fired not from the 'user profile' page, so there is no data to update
@@ -229,7 +234,7 @@ class URE_Posts_Edit_Access_User {
         
         $own_data_only = $this->lib->get_request_var('ure_own_data_only', 'post', 'checkbox');
         $this->user_meta->set_own_data_only( $user_id, $own_data_only );
-        
+        $this->update_post_types( $user_id );
         $this->update_posts_list( $user_id );
         $this->update_categories_list( $user_id );
         $this->update_authors_list( $user_id );                                                                
@@ -262,7 +267,11 @@ class URE_Posts_Edit_Access_User {
                 
         foreach( array_values( $user->roles ) as $role_id ) {
             if ( array_key_exists($role_id, $access_data ) ) {
-                $this->roles_data[$user_id][] = $access_data[$role_id];
+                $data = $access_data[$role_id];
+                if ( !isset( $data['data']['post_types'] ) ) {
+                   $data['data']['post_types'] = array();    // data structure changed, v. 4.63
+                }
+                $this->roles_data[$user_id][] = $data;
             }
         }
         
@@ -352,7 +361,7 @@ class URE_Posts_Edit_Access_User {
     private function load_restriction_type() {
         // get from user meta
         $value = $this->user_meta->get_restriction_type( $this->user_id );
-        if ( empty( $value ) ) {
+        if ( empty( $value ) ) {    // Look at roles
             $value = $this->get_restriction_type_from_roles();            
             if ( empty( $value ) ) {
                $value = 1; // Allow by default
@@ -361,18 +370,74 @@ class URE_Posts_Edit_Access_User {
         
         $this->restriction_type = apply_filters( 'ure_edit_posts_access_restriction_type', $value );       
         
-        return $value;
-        
+        return $value;        
     }
     // end of load_restrictions_type()
     
-    
+                
     public function get_restriction_type() {        
+        
+        if ( $this->restriction_type==null ) {
+            $this->load_restriction_type();
+        }
         
         return $this->restriction_type;                
     }
     // end of get_restriction_type()
 
+    
+    private function get_post_types_from_roles() {
+        $user = wp_get_current_user();
+        if ( empty( $user->roles ) ) {
+            return false;   
+        }
+        $data = $this->get_data_from_user_roles( $user->ID );
+        $post_types = array();
+        foreach( $data as $item ) {
+            if ( $item['restriction_type']!==$this->restriction_type ) {
+                continue;
+            }
+            $post_types = array_merge( $post_types, $item['data']['post_types'] );
+        }
+        
+        return $post_types;
+    }
+    // end of get_post_types_from_roles()
+    
+    
+    private function load_post_types() {
+    
+        $user_post_types = $this->user_meta->get_post_types( $this->user_id );
+        $roles_post_types = $this->get_post_types_from_roles();
+        $post_types = array_merge( $user_post_types, $roles_post_types );
+                
+        $this->post_types = $post_types;
+        
+        return $this->post_types;
+    }
+    // end of load_post_types()
+    
+    
+    public function get_post_types() {
+        
+        if ( empty( $this->post_types ) ) {
+            $this->post_types = array();
+        }
+        
+        return $this->post_types;
+        
+    }
+    // end of get_post_types()
+    
+    
+    private function update_post_types( $user_id ) {
+        
+        $post_types = URE_Posts_Edit_Access_Role_Controller::extract_wp_post_types_from_post();
+        $this->user_meta->set_post_types( $user_id, $post_types );
+        
+    }
+    // end of update_post_types()
+    
 
     private function get_own_data_only_from_roles() {
         
@@ -410,9 +475,8 @@ class URE_Posts_Edit_Access_User {
         if ( empty( $current_user->roles ) ) {
             return '';
         }
-        
         $data = $this->get_data_from_user_roles( $current_user->ID );        
-        if ( empty( $data ) ) {
+        if ( empty( $data ) ) {            
             return '';
         }
         
@@ -874,6 +938,7 @@ class URE_Posts_Edit_Access_User {
     }
     // end of _get_posts_list()
     
+    
     public function get_posts_list( $post_type = '' ) {
 
         $user_id = get_current_user_id();
@@ -883,6 +948,13 @@ class URE_Posts_Edit_Access_User {
         
         if ( empty( $post_type ) ) {
             $post_type = 'post';
+        }
+        
+        $restriction_type = $this->get_restriction_type();
+        $post_types = $this->get_post_types();                
+        $pt_in = in_array( $post_type, $post_types );
+        if ( $restriction_type==2 && $pt_in ) {    // Prohibit this post type
+            return array();
         }
         
         $transient_key = 'posts_list_'. $post_type;
@@ -903,8 +975,7 @@ class URE_Posts_Edit_Access_User {
         // apply custom filter for resulting posts ID list
         $posts_list = apply_filters( 'ure_edit_access_posts_list', $posts_list, $post_type );
                 
-        if ( count( $posts_list )>0 ) {
-            $restriction_type = $this->get_restriction_type();
+        if ( count( $posts_list )>0 ) {            
             if ( $restriction_type==1 ) { // for 'Allow' only, do not exclude anything if it's a blocked/prohibited list
                 $show_posts_which_can_edit_only = apply_filters( 'ure_show_posts_which_can_edit_only_backend',  true );
                 if ( $show_posts_which_can_edit_only ) {
@@ -922,11 +993,12 @@ class URE_Posts_Edit_Access_User {
     
     private function calc_is_restricted() {
         
+        $post_types_str = implode(',', $this->get_post_types() );
         $posts_list_str = $this->get_post_ids();
         $categories_list_str = $this->get_post_categories_list();
         $post_authors_list_str = $this->get_post_authors_list();
-        $restrictions = trim($posts_list_str . $categories_list_str . $post_authors_list_str);
-        $this->restricted = empty($restrictions) ? false : true;
+        $restrictions = trim($post_types_str . $posts_list_str . $categories_list_str . $post_authors_list_str);
+        $this->restricted = empty( $restrictions ) ? false : true;
 
     }
     // end of calc_is_restricted()

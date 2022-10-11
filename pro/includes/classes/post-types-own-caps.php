@@ -20,7 +20,7 @@ class URE_Post_Types_Own_Caps {
         // support Divi theme custom post type 'et_pb_builder'
         add_filter('et_builder_should_load_framework', array($this, 'should_load_divi_core'));
         
-        add_action('init', array($this, 'set_own_caps'), 98, 2);    // execute before URE_Create_Posts_Cap        
+        add_action('wp_loaded', array($this, 'set_own_caps'), 98, 2);    // execute before URE_Create_Posts_Cap        
     }
     // end of __construct()
     

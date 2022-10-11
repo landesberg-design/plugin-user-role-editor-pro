@@ -71,8 +71,8 @@ class URE_GF_Access_View {
 <?php
     if ( isset( $user_profile ) ) {
 ?>
-                    <input type="radio" name="ure_gf_what_to_do" id="ure_gf_what_to_do_0" value="0" <?php  checked( $what_to_do, 0 );?> >
-                    <label for="ure_gf_what_to_do_0"><?php esc_html_e('Look at roles', 'user-role-editor'); ?></label>
+                    <input type="radio" name="ure_gf_what_to_do" id="ure_gf_what_to_do_0" value="3" <?php  checked( $what_to_do, 3 );?> >
+                    <label for="ure_gf_what_to_do_3"><?php esc_html_e('Look at roles', 'user-role-editor'); ?></label>
 <?php
     }
 ?>
