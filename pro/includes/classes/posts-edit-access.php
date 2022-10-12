@@ -20,7 +20,7 @@ class URE_Posts_Edit_Access {
         new URE_Posts_Edit_Access_Role();
         new URE_Posts_Edit_Access_Bulk_Action();                                
         
-        add_action( 'init', array($this, 'set_hooks_general') );
+        add_action( 'init', array($this, 'set_hooks_general'), 9 );
         add_action( 'admin_init', array($this, 'set_hooks_admin') );
         add_filter( 'map_meta_cap', array($this, 'block_edit_post'), 10, 4 );
                 
@@ -94,16 +94,14 @@ class URE_Posts_Edit_Access {
     // Check if post_type apparently restricted 
     private function is_post_type_restricted( $post_type ) {
         
+        if ( empty( $this->user ) ) {
+            return false;
+        }
         $restriction_type = $this->user->get_restriction_type();
         $post_types = $this->user->get_post_types();                
         $pt_in = in_array( $post_type, $post_types );       
-        $posts_list = $this->user->get_posts_list( $post_type );
         
         if ( $restriction_type==1 ) {   // Allow               
-            if ( !empty( $posts_list ) ) {
-                // There is restriction by selected posts 
-                return true;
-            }
             if ( $pt_in ) {
                 // A whole post type is directly allowed
                 return false;   
@@ -115,14 +113,6 @@ class URE_Posts_Edit_Access {
             if ( $pt_in ) {
                 // Post type is directly prohibited
                 return true;    
-            }
-            if ( !empty( $posts_list ) ) { 
-                 // There is restriction by selected posts
-                return true;
-            }
-            if ( !$pt_in ) {
-                // Post type is not directly prohibited
-                return false;    
             }
         }        
         
@@ -143,13 +133,20 @@ class URE_Posts_Edit_Access {
         // do not limit user with Administrator role or the user for whome posts/pages edit restrictions were not set
         if ( !$this->user->is_restriction_applicable() ) {
             return $counts;
-        }    
+        }
         
+        // Exclude post type from edit restrictions by filter
+        $restrict_it = apply_filters('ure_restrict_edit_post_type', $type );
+        if ( empty( $restrict_it ) ) {
+            return $counts;
+        }
+        
+        // Check if post type is apparently restricted
         $restrict_it = $this->is_post_type_restricted( $type );
         if ( $restrict_it ) {
-            $restrict_it = apply_filters('ure_restrict_edit_post_type', $type );
-        }
-        if ( empty( $restrict_it ) ) {
+            foreach( $counts as $key=>$value ) {
+                $counts->{$key} = 0;
+            }
             return $counts;
         }
 
@@ -168,9 +165,7 @@ class URE_Posts_Edit_Access {
         }
         $restriction_type = $this->user->get_restriction_type();
         $posts_list = $this->user->get_posts_list( $type );
-        if ( count( $posts_list )==0 ) {
-            $query = false;
-        } else {    
+        if ( !empty( $posts_list ) ) {
             if ( $restriction_type==1 ) {   // Allow
                 $posts_list_str = URE_Base_Lib::esc_sql_in_list('int', $posts_list);
                 $query .= " AND ID IN ($posts_list_str)";
@@ -179,12 +174,8 @@ class URE_Posts_Edit_Access {
                 $query .= " AND ID NOT IN ($posts_list_str)";
             }                
         }
-        if (!empty($query)) {
-            $query .= ' GROUP BY post_status';
-            $results = (array) $wpdb->get_results($wpdb->prepare($query, $type), ARRAY_A);
-        } else {
-            $results = array();
-        }
+        $query .= ' GROUP BY post_status';
+        $results = (array) $wpdb->get_results($wpdb->prepare($query, $type), ARRAY_A);
         
         $counts = array_fill_keys( get_post_stati(), 0 );
         foreach ($results as $row) {
@@ -284,8 +275,8 @@ class URE_Posts_Edit_Access {
             return $views;
         }
         
-     			$mine_args = array(
-        				'post_type' => $post_type,
+     	$mine_args = array(
+            'post_type' => $post_type,
             'author' => $current_user_id
         );
 
@@ -313,85 +304,95 @@ class URE_Posts_Edit_Access {
     // end of update_mine_view_counter()
             
     
-    public function block_edit_post($caps, $cap='', $user_id=0, $args=array()) {
+    public function block_edit_post( $caps, $cap='', $user_id=0, $args=array() ) {
                
         $current_user_id = get_current_user_id();
-        if ($current_user_id==0) {
+        if ( $current_user_id==0 ) {
             return $caps;
         }
         
-        if (count($args)>0) {
+        if ( count($args)>0 ) {
             $post_id = $args[0];
         } else {
             $post_id = filter_input(INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT);
         }
-        if (empty($post_id)) {
+        if ( empty( $post_id ) ) {
             return $caps;
         }
         
-        remove_filter('map_meta_cap', array($this, 'block_edit_post'), 10); //  exclude possible recursion
+        remove_filter('map_meta_cap', array($this, 'block_edit_post'), 10 ); //  exclude possible recursion
         $is_super_admin = $this->lib->is_super_admin();
-        add_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4);
-        if ($is_super_admin) {
+        add_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4 );
+        if ( $is_super_admin ) {    // do not restrict super admin
             return $caps;
         }
          
-        $post = get_post($post_id);
-        if (empty($post)) {
+        $post = get_post( $post_id );
+        if ( empty( $post ) ) {
             return $caps;
         }
-        if (!post_type_exists($post->post_type)) {
+        if ( !post_type_exists( $post->post_type ) ) {
+            return $caps;
+        }
+        
+        if ( $this->lib->is_internal_cpt( $post->post_type ) ) {
             return $caps;
         }
         
         $custom_caps = $this->lib->get_edit_custom_post_type_caps();
-        if (!in_array($cap, $custom_caps)) {
+        if ( !in_array( $cap, $custom_caps ) ) {
             return $caps;
         }
         
-        if (!empty($_POST['original_post_status']) && $_POST['original_post_status']=='auto-draft' &&
-            !empty($_POST['auto_draft']) && $_POST['auto_draft']==1) {  
+        if ( !empty( $_POST['original_post_status'] ) && $_POST['original_post_status']=='auto-draft' &&
+            !empty( $_POST['auto_draft'] ) && $_POST['auto_draft']==1 ) {  
             // allow to save new post/page
             // that's admin responsibility if user with 'create_posts' 
             // then will not can edit a new created post due to existing editing restrictions
             return $caps;
         }
         
+        // Check the whole post type restriction
+        remove_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4 );  // do not allow endless recursion
+        
+        // Exclude post type from edit restrictions via filter
+        $restrict_it = apply_filters('ure_restrict_edit_post_type', $post->post_type );
+        if ( !empty( $restrict_it ) ) {
+            $restrict_it = $this->is_post_type_restricted( $post->post_type );
+        }               
+        
+        add_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4 );     // restore removed filter
+        
         if ( empty( $this->user ) ) {
             $this->user = new URE_Posts_Edit_Access_User( $this );
         }
-        $posts_list = $this->user->get_posts_list( $post->post_type );
-        if (count($posts_list)==0) {        
+        $restriction_type = $this->user->get_restriction_type();
+        if ( ( $restrict_it ) && ( $restriction_type==2 ) ) {
+            // Editing of any post of this type is prohibited
+            $caps[] = 'do_not_allow';
             return $caps;
-        }                                
-                        
-        remove_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4);  // do not allow endless recursion
-        $restrict_it = $this->is_post_type_restricted( $post->post_type );
-        if ( $restrict_it ) {
-            $restrict_it = apply_filters('ure_restrict_edit_post_type', $post->post_type );
         }
-        add_filter('map_meta_cap', array($this, 'block_edit_post'), 10, 4);     // restore filter
-        if ( empty( $restrict_it ) ) {            
+                        
+        $posts_list = $this->user->get_posts_list( $post->post_type );
+        if ( count( $posts_list )==0 ) {        
             return $caps;
-        }        
+        }                                                                       
         
         // automatically add related attachments to the list of posts
         $attachments_list = $this->user->get_attachments_list();
-        if (!empty($attachments_list)) {
-            $posts_list = array_merge($posts_list, $attachments_list);
+        if ( !empty( $attachments_list ) ) {
+            $posts_list = array_merge( $posts_list, $attachments_list );
         }
-
         
-        if ($post->post_type=='revision') { // Check access to the related post, not to the revision
+        if ( $post->post_type=='revision' ) { // Check access to the related post, not to the revision
             $post_id = $post->post_parent;
         }
                         
-        $do_not_allow = in_array($post_id, $posts_list);    // not edit these
-        $restriction_type = $this->user->get_restriction_type();
-        if ($restriction_type==1) {
+        $do_not_allow = in_array( $post_id, $posts_list );    // not edit these
+        if ( $restriction_type==1 ) {
             $do_not_allow = !$do_not_allow;   // not edit others
         }
-        if ($do_not_allow) {
+        if ( $do_not_allow ) {
             $caps[] = 'do_not_allow';
         }                    
         
@@ -405,7 +406,7 @@ class URE_Posts_Edit_Access {
         $restriction_type = $this->user->get_restriction_type();
         $post_type = $query->query['post_type'];
         $posts_list = $this->user->get_posts_list( $post_type );
-        if ( count( $posts_list )==0 ) {
+        if ( count( $posts_list )==0 || in_array(-1, $posts_list ) ) {
                 $query->set('p', -1);   // return empty list
         } else {
             if ( $restriction_type==1 ) {   // Allow
@@ -509,19 +510,33 @@ class URE_Posts_Edit_Access {
         if ( $suppressing_filters ) {
             return;
         }                   
-        
+                
         if ( !empty( $query->query['post_type'] ) ) {
-            $restrict_it = $this->is_post_type_restricted( $query->query['post_type'] );
-            if ( $restrict_it ) {
-                $restrict_it = apply_filters('ure_restrict_edit_post_type', $query->query['post_type'] );
+            $post_type = $query->query['post_type'];
+            
+            // Do not restrict custom post types created by "Advanced custom post fields" plugin
+            if ( $post_type=='acf-field' || $post_type=='acf-field-group') {
+                return;
             }
+            
+            // exclude post type from edit restrictions via filter
+            $restrict_it = apply_filters('ure_restrict_edit_post_type', $post_type );
             if ( empty( $restrict_it ) ) {
                 return;
-            } 
-            // Do not restrict custom post types created by "Advanced custom post fields" plugin
-            if ( $query->query['post_type']=='acf-field' || $query->query['post_type']=='acf-field-group') {
-                return;
             }
+            
+            // Check if post type is apparently restricted
+            $restrict_it = $this->is_post_type_restricted( $post_type );
+            if ( !$restrict_it ) {                
+                if ( empty( $this->user ) ) {
+                   $this->user = new URE_Posts_Edit_Access_User( $this );
+                }
+                // Check if selected posts are restricted
+                $posts_list = $this->user->get_posts_list( $post_type );
+                if ( count( $posts_list )==0 ) {        
+                    return;
+                }
+            }             
         }
         
         if ( $query->query['post_type']=='attachment' ) {
@@ -557,29 +572,32 @@ class URE_Posts_Edit_Access {
         if ( !$this->user->is_restriction_applicable() ) {
             return $pages;
         }
-        $restrict_it = $this->is_post_type_restricted('page');
-        if ( $restrict_it ) {
-            $restrict_it = apply_filters('ure_restrict_edit_post_type', 'page');
-        }
+        // Check if 'page' post type restricted via filter
+        $restrict_it = apply_filters('ure_restrict_edit_post_type', 'page');
         if ( empty( $restrict_it ) ) {
             return $pages;
         }
         
+        // Check if 'page' post type is apparently restricted
+        $restrict_it = $this->is_post_type_restricted('page');        
         $restriction_type = $this->user->get_restriction_type();
+        if ( $restrict_it && $restriction_type==2 ) {   // 'page' post type is apparently prohibited
+            return array(); // There is no available pages
+        }
+        
         $posts_list = $this->user->get_posts_list( 'page' );
         if ( count( $posts_list )==0 ) {    // Allow
             if ( $restriction_type==1 ) {
                 return array(); // There is no available pages
             } else {    // Prohibit
                 return $pages;  //  All pages are available
-            }
-            
+            }            
         }                 
         
         $pages1 = array();
         foreach( $pages as $page ) {
             if ( $restriction_type==1 ) { // Allow: not edit others
-                if ( in_array($page->ID, $posts_list ) ) {    // not edit others
+                if ( in_array( $page->ID, $posts_list ) ) {    // not edit others
                     $pages1[] = $page;                    
                 }
             } else {    // Prohibit: Not edit these

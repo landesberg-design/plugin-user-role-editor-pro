@@ -127,7 +127,26 @@ class URE_Lib_Pro extends URE_Lib {
     }
     // end of init_result()
                                          
-          
+    /*
+     * Returns TRUE if $post_type is internal CPT for some plugin, like Elementor, 
+     * and URE should not take care about ordinal user edit access to such CPT
+     */
+    public function is_internal_cpt( $post_type ) {
+        
+        $cpt_to_skip = array(
+            'elementor_library',
+            'e-landing-page',
+            'elementor_snippet',
+            'elementor_icons',
+            'elementor_font'
+        );
+        $result =  in_array( $post_type, $cpt_to_skip );
+
+        return $result;        
+    }
+    // end of skip_internal_cpt()
+    
+    
     /**
      * Returns the list of edit capabilities for all custom post type, including WordPress built-in post and page
      * 
@@ -136,16 +155,25 @@ class URE_Lib_Pro extends URE_Lib {
     public function get_edit_custom_post_type_caps() {
         
         $caps = get_transient('ure_edit_custom_post_type_caps');
-        if (empty($caps)) {
+        if ( empty( $caps ) ) {
             // Such CPT as a WooCommerce shop_order has public set to false, but show_ui to true
             $post_types = get_post_types(array(/*'public'=>true,*/ 'show_ui'=>true), 'objects');
             $caps = array();
             foreach($post_types as $post_type) {
-                if (!in_array($post_type->cap->edit_post, $caps)) {
+                if ( $this->is_internal_cpt( $post_type->name ) ) {
+                    continue;
+                }
+                if ( !in_array( $post_type->cap->edit_post, $caps ) ) {
                     $caps[] = $post_type->cap->edit_post;
                 }
-                if (!in_array($post_type->cap->edit_posts, $caps)) {
+                if ( !in_array( $post_type->cap->edit_posts, $caps ) ) {
                     $caps[] = $post_type->cap->edit_posts;
+                }
+                if ( !in_array( $post_type->cap->delete_post, $caps ) ) {
+                    $caps[] = $post_type->cap->delete_post;
+                }
+                if ( !in_array( $post_type->cap->delete_posts, $caps ) ) {
+                    $caps[] = $post_type->cap->delete_posts;
                 }
             }
             set_transient('ure_edit_custom_post_type_caps', $caps, 15);

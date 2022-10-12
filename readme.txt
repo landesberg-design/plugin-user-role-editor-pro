@@ -2,8 +2,8 @@
 Contributors: Vladimir Garagulya (https://www.role-editor.com)
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
-Tested up to: 6.0.1
-Stable tag: 4.63
+Tested up to: 6.0.2
+Stable tag: 4.63.2
 Requires PHP: 7.3
 License URI: https://www.role-editor.com/end-user-license-agreement/
 
@@ -39,10 +39,25 @@ Right decision in this case is to delete free version folder (user-role-editor) 
 
 == Changelog ==
 
+= [4.63.2] 29.09.2022 =
+* Core version: 4.63.1
+* Fix: Edit access restrictions add-on: Prohibit by selected posts ID list criteria worked incorrectly - all posts were prohibited instead of selected only.
+* Update: Edit access restrictions add-on: It skips Elementor's internal custom post types to reduce general time execution. 
+
+= [4.63.1] 21.09.2022 =
+* Core version: 4.63.1
+* Marked as compatible with WordPress version 6.0.2
+* Fix: Edit access restrictions add-on: It was possible to open a post from a prohibited post type for editing via direct link by post ID, like /wp-admin/post.php?post=NN&action=edit
+* Update: Admin menu access add-on: URL Parameters White List: convert parameter name to lower case before processing.
+* Update: German translation was updated.
+* Core version was updated to 4.63.1
+* Fix: PHP Warning: Attempt to read property “ID” on null in ./includes/classes/user-role-editor.php on line 369
+* Fix: Deprecated: Automatic conversion of false to array is deprecated in ./includes/classes/base-lib.php on line 212
+
 = [4.63] 03.08.2022 =
 * Core version: 4.63
 * Update: Marked as compatible with WordPress 6.0.1
-* New: Edit restrictions access add-on: It's possible allow/prohibit for role or user the selected post types: posts, pages, custom post types. 
+* New: Edit access restrictions add-on: It's possible allow/prohibit for role or user the selected post types: posts, pages, custom post types. 
 * Fix: Content view restrictions add-on: Fatal error: Uncaught InvalidArgumentException: target should be an object with map method or an array in /wp-content/plugins/sitepress-multilingual-cms/vendor/wpml/fp/core/Fns.php:156
   URE tried to check if not logged-in user can edit the post, by its ID. This leaded to a problem inside WPML plugin code. 
 * Fix: Content edit restrictions:  "Force custom post types to use their own capabilities" option: URE automatically created custom post types unique capabilities later then "Fusion Builder" plugin did. 'init' action was replaced with 'wp_loaded' one.

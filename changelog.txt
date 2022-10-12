@@ -1,5 +1,20 @@
 User Role Editor Pro CHANGES LOG (full version).
 ================================================
+= [4.63.2] 29.09.2022 =
+* Core version: 4.63.1
+* Fix: Edit access restrictions add-on: Prohibit by selected posts ID list criteria worked incorrectly - all posts were prohibited instead of selected only.
+* Update: Edit access restrictions add-on: It skips Elementor's internal custom post types to reduce general time execution. 
+
+= [4.63.1] 21.09.2022 =
+* Core version: 4.63.1
+* Marked as compatible with WordPress version 6.0.2
+* Fix: Edit access restrictions add-on: It was possible to open a post from a prohibited post type for editing via direct link by post ID, like /wp-admin/post.php?post=NN&action=edit
+* Update: Admin menu access add-on: URL Parameters White List: convert parameter name to lower case before processing.
+* Update: German translation was updated.
+* Core version was updated to 4.63.1
+* Fix: PHP Warning: Attempt to read property “ID” on null in ./includes/classes/user-role-editor.php on line 369
+* Fix: Deprecated: Automatic conversion of false to array is deprecated in ./includes/classes/base-lib.php on line 212
+
 = [4.63] 12.07.2022 =
 * Core version: 4.63
 * Update: Marked as compatible with WordPress 6.1

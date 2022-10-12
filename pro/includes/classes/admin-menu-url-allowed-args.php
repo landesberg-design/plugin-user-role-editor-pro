@@ -252,20 +252,20 @@ class URE_Admin_Menu_URL_Allowed_Args {
     
     
     // extract arguments value from CSV string to array
-    static public function extract_csv($args_str) {
-        if (empty($args_str)) {
+    static public function extract_csv( $args_str ) {
+        if ( empty( $args_str ) ) {
             return array();
         }
         
-        $args = explode(',', $args_str);
+        $args = explode(',', strtolower( $args_str ) );
         // trim resulted array values
-        foreach($args as $key=>$value) {
-            $args[$key] = trim($value);
+        foreach( $args as $key=>$value ) {
+            $args[$key] = trim( $value );
         }
         
         return $args;
     }
-    // end of extract()
+    // end of extract_csv()
     
     
     static private function extract_page_from_command($command) {

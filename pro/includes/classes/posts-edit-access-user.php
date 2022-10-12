@@ -954,7 +954,7 @@ class URE_Posts_Edit_Access_User {
         $post_types = $this->get_post_types();                
         $pt_in = in_array( $post_type, $post_types );
         if ( $restriction_type==2 && $pt_in ) {    // Prohibit this post type
-            return array();
+            return array(-1);
         }
         
         $transient_key = 'posts_list_'. $post_type;
